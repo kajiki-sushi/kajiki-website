@@ -795,24 +795,6 @@ body.is-dormant #paiement {
   gap: var(--text-gap);
 }
 
-/* Three inputs sharing one underline — reads as a single field. */
-.paiement-card-row {
-  display: grid;
-  grid-template-columns: 70% 20% 10%;
-  border-bottom: 1px solid var(--color-underline);
-  transition: border-color var(--duration-fast) ease;
-}
-
-/* FLAG: hardcoded widths for card row — reflects typical input lengths (card >> exp > cvc) */
-
-.paiement-card-row:hover,
-.paiement-card-row:focus-within {
-  border-bottom-color: var(--color-underline-hover);
-}
-
-.paiement-card-row .field {
-  border-bottom: none;
-}
 
 .paiement-close {
   position: absolute;

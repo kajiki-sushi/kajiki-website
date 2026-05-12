@@ -146,7 +146,7 @@
                 </ul>
               </div>
 
-              <div class="select">
+              <div class="select" data-paiement-day>
                 <button type="button" class="field select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Jour de retrait">
                   <span class="select-value">Jeudi</span>
                   <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
@@ -171,13 +171,9 @@
           </div>
 
           <div class="paiement-fields">
-            <input type="email" class="field" placeholder="Email" autocomplete="email">
-            <input type="text" class="field" placeholder="Nom du titulaire" autocomplete="cc-name">
-            <div class="paiement-card-row">
-              <input type="text" class="field" placeholder="No. de Carte" autocomplete="cc-number" inputmode="numeric">
-              <input type="text" class="field" placeholder="MM/AA" autocomplete="cc-exp" inputmode="numeric">
-              <input type="text" class="field" placeholder="CVC" autocomplete="cc-csc" inputmode="numeric">
-            </div>
+            <input type="email" class="field" placeholder="Email" autocomplete="email" data-paiement-email>
+            <input type="text" class="field" placeholder="Nom du titulaire" autocomplete="cc-name" data-paiement-name>
+            <div id="payment-element"></div>
           </div>
 
           <button type="button" class="button button--full">CONFIRMER</button>
