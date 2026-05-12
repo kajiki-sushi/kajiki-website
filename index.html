@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAJIKI®</title>
+  <link rel="icon" type="image/png" href="assets/icons/favicon.png?v=10" />
+  <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=10" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/style.css?v=10" />
+</head>
+
+<body>
+  <header class="site-header">
+    <a href="index.html" class="signature">KAJIKI<sup>®</sup></a>
+  </header>
+
+  <main>
+
+    <!-- ============================================================
+         POUR LANCER UNE SÉRIE :
+           1. Mettre à jour les blocs SÉRIE et RETRAIT ci-dessous.
+           2. Retirer l'entrée "upcoming" en tête de js/archive.js.
+         POUR PASSER EN DORMANT :
+           Ajouter une entrée "upcoming" en tête de js/archive.js.
+         ============================================================ -->
+
+    <section id="intro" class="screen">
+      <div class="page-content">
+        <p class="body-text">
+          Série mensuelle<br>
+          Composition selon les meilleurs arrivages<br>
+          Sushi de la criée de Sète
+        </p>
+      </div>
+
+    </section>
+
+    <section id="product" class="screen">
+      <div class="page-content">
+        <div class="single-image-frame-portrait">
+          <img src="assets/images/samples-3.jpg" alt="Composition de la série en cours">
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         SÉRIE — données variables (à mettre à jour à chaque série)
+         Titre :  Série 02
+         Prix :   120€
+         Dates :  23 au 25 mai
+         ============================================================ -->
+    <section id="serie" class="screen">
+      <div class="page-content">
+
+        <h2 class="display-title">Série 02</h2>
+
+        <!-- specsheet — stable, à modifier en session longue -->
+        <div class="specsheet--design">
+          <div class="specsheet-row">
+            <span class="specsheet-label">Quantité</span>
+            <span class="specsheet-value">Pour 2 pers.<br>32-42 pièces</span>
+          </div>
+          <div class="specsheet-row">
+            <span class="specsheet-label">Poissons</span>
+            <span class="specsheet-value">2-3 sortes</span>
+          </div>
+        </div>
+
+        <p class="body-text">
+          En précommande : 120€ par Série KAJIKI<sup>®</sup><br>
+          Disponible du 28 au 30 mai
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ============================================================
+         RETRAIT — données variables (à mettre à jour à chaque série)
+         Lieu :    Les Poissons d'Abord, Montpellier
+         Lieu URL: #
+         Horaire : 15h — 18h
+         ============================================================ -->
+    <section id="retrait" class="screen">
+      <div class="page-content">
+
+        <h2 class="display-title">Retrait</h2>
+
+        <div class="specsheet-action-group">
+          <div class="specsheet--design">
+            <div class="specsheet-row">
+              <span class="specsheet-label">Lieu</span>
+              <a href="#" class="specsheet-value text-link">Les Poissons d'Abord,<br>Montpellier</a>
+            </div>
+            <div class="specsheet-row">
+              <span class="specsheet-label">Horaire</span>
+              <span class="specsheet-value">15h — 18h</span>
+            </div>
+          </div>
+          <a href="pages/precommande.html" class="button-link button-link--full">PRÉCOMMANDER</a>
+        </div>
+
+      </div>
+
+    </section>
+
+    <section id="archive" class="screen">
+      <div class="page-content">
+
+        <div class="arrow-nav">
+          <button class="arrow-nav-btn" data-archive="prev" aria-label="Série précédente">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 3 L6 12 L15 21" />
+            </svg>
+          </button>
+          <div class="arrow-nav-center">
+            <span id="archive-numero" class="display-title"></span>
+          </div>
+          <button class="arrow-nav-btn is-disabled" data-archive="next" aria-label="Série suivante" aria-disabled="true">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 3 L18 12 L9 21" />
+            </svg>
+          </button>
+        </div>
+
+        <div id="archive-content"></div>
+
+      </div>
+
+      <div id="site-footer"></div>
+    </section>
+
+  </main>
+
+  <script src="js/footer.js?v=10"></script>
+  <script src="js/navigation.js?v=10"></script>
+  <script src="js/notifications.js?v=10"></script>
+  <script src="js/archive.js?v=10"></script>
+</body>
+</html>
