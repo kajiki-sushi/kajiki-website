@@ -104,7 +104,84 @@
               <span class="specsheet-value">15h — 18h</span>
             </div>
           </div>
-          <a href="pages/precommande.html" class="button-link button-link--full">PRÉCOMMANDER</a>
+          <a href="#paiement" class="button-link button-link--full">PRÉCOMMANDER</a>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ============================================================
+         PAIEMENT — données variables (à mettre à jour à chaque série)
+         Prix unitaire :  120€  (voir js/paiement.js)
+         Détail :         1 plateau pour 2 personnes.
+                          À retirer le jeudi 23 mai.
+         Jours :          Jeudi / Vendredi / Samedi
+         ============================================================ -->
+    <section id="paiement" class="screen">
+
+      <a href="#retrait" class="paiement-close" aria-label="Fermer">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M5 5 L19 19 M19 5 L5 19" />
+        </svg>
+      </a>
+
+      <div class="page-content">
+
+        <div class="paiement-form">
+
+          <div class="paiement-summary">
+            <div class="paiement-selects">
+
+              <div class="select" data-paiement-quantity>
+                <button type="button" class="field select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Quantité">
+                  <span class="select-value">1 unité</span>
+                  <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 15 L12 9 L18 15" />
+                  </svg>
+                </button>
+                <ul class="select-menu" role="listbox" hidden>
+                  <li class="select-option" role="option" data-value="1" aria-selected="true">1 unité</li>
+                  <li class="select-option" role="option" data-value="2">2 unités</li>
+                </ul>
+              </div>
+
+              <div class="select">
+                <button type="button" class="field select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Jour de retrait">
+                  <span class="select-value">Jeudi</span>
+                  <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M6 15 L12 9 L18 15" />
+                  </svg>
+                </button>
+                <ul class="select-menu" role="listbox" hidden>
+                  <li class="select-option" role="option" data-value="jeudi" aria-selected="true">Jeudi</li>
+                  <li class="select-option" role="option" data-value="vendredi">Vendredi</li>
+                  <li class="select-option" role="option" data-value="samedi">Samedi</li>
+                </ul>
+              </div>
+
+            </div>
+            <div class="paiement-summary-text">
+              <p class="body-text-medium">Total : <span data-paiement-total>120€</span></p>
+              <p class="detail-text">
+                1 plateau pour 2 personnes.<br>
+                À retirer le jeudi 23 mai.
+              </p>
+            </div>
+          </div>
+
+          <div class="paiement-fields">
+            <input type="email" class="field" placeholder="Email" autocomplete="email">
+            <input type="text" class="field" placeholder="Nom du titulaire" autocomplete="cc-name">
+            <div class="paiement-card-row">
+              <input type="text" class="field" placeholder="No. de Carte" autocomplete="cc-number" inputmode="numeric">
+              <input type="text" class="field" placeholder="MM/AA" autocomplete="cc-exp" inputmode="numeric">
+              <input type="text" class="field" placeholder="CVC" autocomplete="cc-csc" inputmode="numeric">
+            </div>
+          </div>
+
+          <button type="button" class="button button--full">CONFIRMER</button>
+
         </div>
 
       </div>
@@ -143,5 +220,7 @@
   <script src="js/navigation.js?v=10"></script>
   <script src="js/notifications.js?v=10"></script>
   <script src="js/archive.js?v=10"></script>
+  <script src="js/select.js?v=10"></script>
+  <script src="js/paiement.js?v=10"></script>
 </body>
 </html>

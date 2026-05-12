@@ -146,6 +146,7 @@
   --text-signature: 14px;
   --text-nav: 11px;
   --text-body: 10px;
+  --text-body-medium: 12px;
   --text-detail: 8px;
 
   --letter-spacing-display: -0.04em;
@@ -153,7 +154,7 @@
 
   --line-height-display: 1;
   --line-height-text: 1.6;
-  --line-height-detail: 1.2;
+  --line-height-detail: 1.4;
   --line-height-nav: 1.1;
 
   /* Spacing */
@@ -163,7 +164,7 @@
 
   --text-gap: 12px;
   --section-gap: 28px;
-  --grid-gap: 4px;        /* image gallery */
+  --grid-gap: 8px;        /* image gallery */
 
   --detail-gap: 4px;  /* between detail-text items */
   --button-gap: 12px;  /* gap adjacent to a button */
@@ -174,7 +175,6 @@
   --notification-field: 200px;
   --field-height: 30px;
   --button-height: 36px;
-  --input-padding: 10px;
   --button-padding: 22px;
 
   /* Arrow nav */
@@ -192,6 +192,7 @@
     --text-signature: 17px;
     --text-nav: 14px;
     --text-body: 12.5px;
+    --text-body-medium: 14px;
     --text-detail: 10px;
 
     --letter-spacing-display: -0.01em;
@@ -210,7 +211,6 @@
     --notification-field: 260px;
     --field-height: 40px;
     --button-height: 48px;
-    --input-padding: 12px;
     --button-padding: 36px;
 
     /* Arrow nav */
@@ -287,6 +287,13 @@ img {
   letter-spacing: var(--letter-spacing-text);
 }
 
+.body-text-medium {
+  font-size: var(--text-body-medium);
+  font-weight: var(--weight-medium);
+  line-height: var(--line-height-text);
+  letter-spacing: var(--letter-spacing-text);
+}
+
 .menu-text {
   font-size: var(--text-nav);
   font-weight: var(--weight-regular);
@@ -336,7 +343,8 @@ main {
 }
 
 body.is-dormant #serie,
-body.is-dormant #retrait {
+body.is-dormant #retrait,
+body.is-dormant #paiement {
   display: none;
 }
 
@@ -420,12 +428,18 @@ body.is-dormant #retrait {
 
 /* Buttons and fields */
 
-.field,
 .button,
 .button-link {
   font-family: var(--font-family);
   font-size: var(--text-body);
   font-weight: var(--weight-regular);
+  letter-spacing: var(--letter-spacing-text);
+}
+
+.field {
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  font-weight: var(--weight-light);
   letter-spacing: var(--letter-spacing-text);
 }
 
@@ -436,11 +450,19 @@ body.is-dormant #retrait {
 
 .field {
   height: var(--field-height);
-  padding: 0 var(--input-padding);
-  border: 1px solid var(--color-border);
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid var(--color-underline);
   background: transparent;
   color: var(--color-text);
   line-height: var(--line-height-text);
+  transition: border-color var(--duration-fast) ease;
+}
+
+.field:hover,
+.field:focus {
+  border-bottom-color: var(--color-underline-hover);
+  outline: none;
 }
 
 .field::placeholder {
@@ -449,6 +471,84 @@ body.is-dormant #retrait {
 
 .field--button-height {
   height: var(--button-height);
+}
+
+/* Select — custom dropdown.
+   Replaces native <select> for a consistent appearance across browsers.
+   The trigger extends .field so it reads as a form input; the menu drops
+   below and reuses the underline + quiet-text language of the rest of the system. */
+
+.select {
+  position: relative;
+}
+
+.select-trigger {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.select-chevron {
+  width: 10px;   /* FLAG: hardcoded chevron size */
+  height: 10px;
+  flex-shrink: 0;
+  color: var(--color-quiet);
+  transition: transform var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+
+@media (min-width: 800px) {
+  .select-chevron {
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.select-chevron path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.8;
+  stroke-linecap: square;
+}
+
+.select[data-open="true"] .select-chevron {
+  transform: rotate(180deg);
+  color: var(--color-text);
+}
+
+.select-menu {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  right: 0;
+  list-style: none;
+  background: var(--color-background);
+  z-index: 20;
+}
+
+.select-option {
+  height: var(--field-height);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-size: var(--text-body);
+  font-weight: var(--weight-light);
+  letter-spacing: var(--letter-spacing-text);
+  color: var(--color-quiet);
+  transition: color var(--duration-fast) ease;
+}
+
+.select-option:not(:last-child) {
+  border-bottom: 1px solid var(--color-underline);
+}
+
+.select-option:hover,
+.select-option[aria-selected="true"] {
+  color: var(--color-text);
 }
 
 .button,
@@ -656,6 +756,93 @@ body.is-dormant #retrait {
 .notifications-form.is-submitted .button,
 .notifications-followup.is-submitted .consent-label {
   pointer-events: none;
+}
+
+/* Paiement form
+   Inline payment screen reached by scrolling from the PRÉCOMMANDER button.
+   Width matches --specsheet-width so the form sits in the same visual frame
+   as the design specsheets on adjacent screens. */
+
+.paiement-form {
+  width: var(--specsheet-width);
+  display: flex;
+  flex-direction: column;
+  gap: var(--section-gap);
+}
+
+.paiement-summary {
+  display: flex;
+  flex-direction: column;
+  gap: var(--text-gap);
+}
+
+.paiement-selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--grid-gap);
+}
+
+.paiement-summary-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--detail-gap);
+  text-align: left;
+}
+
+.paiement-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--text-gap);
+}
+
+/* Three inputs sharing one underline — reads as a single field. */
+.paiement-card-row {
+  display: grid;
+  grid-template-columns: 70% 20% 10%;
+  border-bottom: 1px solid var(--color-underline);
+  transition: border-color var(--duration-fast) ease;
+}
+
+/* FLAG: hardcoded widths for card row — reflects typical input lengths (card >> exp > cvc) */
+
+.paiement-card-row:hover,
+.paiement-card-row:focus-within {
+  border-bottom-color: var(--color-underline-hover);
+}
+
+.paiement-card-row .field {
+  border-bottom: none;
+}
+
+.paiement-close {
+  position: absolute;
+  top: var(--screen-padding);
+  right: var(--screen-padding);
+  width: var(--arrow-size);
+  height: var(--arrow-size);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  opacity: var(--opacity-ui);
+  transition: opacity var(--duration-snap) ease;
+  z-index: 10;
+}
+
+.paiement-close:hover {
+  opacity: var(--opacity-ui-hover);
+}
+
+.paiement-close svg {
+  width: 100%;
+  height: 100%;
+}
+
+.paiement-close path {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 0.8;
+  stroke-linecap: square;
 }
 
 /* Single image — portrait variant (active) */

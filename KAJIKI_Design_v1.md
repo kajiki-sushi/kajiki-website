@@ -1,8 +1,10 @@
 # KAJIKI — Design Guidelines
 
-*Version 1.1 — May 2026*
+*Version 1.2 — May 2026*
 *Internal reference. Pairs with KAJIKI_Positioning_v5.md and KAJIKI_Communication_v1.md.*
 *Specific values (type sizes, spacing tokens, breakpoint values) live in the CSS. This doc holds the principles.*
+
+*Update from v1.1: Fields are underlined rather than boxed; underline opacity follows the text-link convention (rest → hover/focus). Added paiement screen on index — the PRÉCOMMANDER button now scrolls to an in-page payment form rather than navigating to a separate page. Orphaned /pages/precommande.html removed.*
 
 *Update from v1: Added footer active-state specification and history-restored state (smooth scroll on back navigation via quiet links). All quiet links site-wide now use `aria-current="page"` for unified current-page detection.*
 
@@ -36,7 +38,7 @@ Goal message: this is controlled, surgical. A brand that studies things, and the
 
 **Buttons.** All buttons share the same appearance — black background, white text, uppercase. One hover state, applied uniformly. No per-button variations.
 
-**Fields.** All fields share the same appearance — transparent background, single-pixel border, muted placeholder. The notifications form is the documented exception (narrower field, button-height variant).
+**Fields.** All fields share the same appearance — transparent background, single-pixel bottom border (underline), no horizontal padding, muted placeholder. On hover and focus the underline opacity increases, mirroring the text-link convention. The notifications form is the documented exception (narrower field, button-height variant). The paiement card row is a documented compound — three inputs share a single underline (No. de Carte / MM/AA / CVC), reading as one field with three slots.
 
 **Quiet links.** Lower opacity at rest, full opacity on hover or active. Used for footer links and any secondary navigation that should be present without competing for attention.
 
