@@ -63,7 +63,7 @@
 
     const elements = stripe.elements();
 
-    cardNumber = elements.create('cardNumber', { style: cardStyle, showIcon: false, placeholder: 'No. de carte' });
+    cardNumber = elements.create('cardNumber', { style: cardStyle, showIcon: false, disableLink: true, placeholder: 'No. de carte' });
     cardExpiry = elements.create('cardExpiry', { style: cardStyle, placeholder: 'MM / AA' });
     cardCvc    = elements.create('cardCvc',    { style: cardStyle, placeholder: 'CVC' });
 
