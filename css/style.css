@@ -795,6 +795,25 @@ body.is-dormant #paiement {
   gap: var(--text-gap);
 }
 
+/* Single unified card field: card number (70%) / expiry (20%) / CVC (10%).
+   The outer .field provides the bottom border; children have no own border. */
+.paiement-card-unified {
+  display: grid;
+  grid-template-columns: 7fr 2fr 1fr;
+  align-items: center;
+}
+
+.stripe-element {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.stripe-element > * {
+  width: 100%;
+  min-width: 0;
+}
+
 
 .paiement-close {
   position: absolute;

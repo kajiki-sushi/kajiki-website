@@ -71,12 +71,16 @@
         <!-- specsheet — stable, à modifier en session longue -->
         <div class="specsheet--design">
           <div class="specsheet-row">
-            <span class="specsheet-label">Quantité</span>
-            <span class="specsheet-value">Pour 2 pers.<br>32-42 pièces</span>
+            <span class="specsheet-label">Format</span>
+            <span class="specsheet-value">2 pers.</span>
+          </div>
+          <div class="specsheet-row">
+            <span class="specsheet-label">Composition</span>
+            <span class="specsheet-value">32-42 pièces</span>
           </div>
           <div class="specsheet-row">
             <span class="specsheet-label">Poissons</span>
-            <span class="specsheet-value">2-3 sortes</span>
+            <span class="specsheet-value">2-3 espèces</span>
           </div>
         </div>
 
@@ -179,7 +183,11 @@
           <div class="paiement-fields">
             <input type="email" class="field" placeholder="Email" autocomplete="email" data-paiement-email>
             <input type="text" class="field" placeholder="Nom du titulaire" autocomplete="cc-name" data-paiement-name>
-            <div id="payment-element"></div>
+            <div class="field paiement-card-unified">
+              <div id="card-number-element" class="stripe-element"></div>
+              <div id="card-expiry-element" class="stripe-element"></div>
+              <div id="card-cvc-element"    class="stripe-element"></div>
+            </div>
           </div>
 
           <button type="button" class="button button--full">CONFIRMER</button>
