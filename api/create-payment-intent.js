@@ -48,7 +48,8 @@ module.exports = async function handler(req, res) {
       metadata: {
         series_name: serie.series.name,
         quantity: String(qty),
-        pickup_day: pickupDay.full_label,
+        pickup_day_short: pickupDay.label,
+        pickup_day_full: pickupDay.full_label,
         pickup_window: serie.pickup.window,
         pickup_location: serie.pickup.location,
         customer_name: name,
