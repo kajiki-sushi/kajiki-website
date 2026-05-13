@@ -1,0 +1,17 @@
+{
+  "active": true,
+  "series": {
+    "name": "Série 02",
+    "price_per_unit_cents": 12000,
+    "max_quantity_per_order": 6
+  },
+  "pickup": {
+    "location": "Les Poissons d'Abord, Montpellier",
+    "window": "15h — 18h",
+    "days": [
+      { "value": "jeudi",    "label": "Jeudi",    "full_label": "Jeudi 28 mai" },
+      { "value": "vendredi", "label": "Vendredi", "full_label": "Vendredi 29 mai" },
+      { "value": "samedi",   "label": "Samedi",   "full_label": "Samedi 30 mai" }
+    ]
+  }
+}
