@@ -51,7 +51,8 @@ module.exports = async function handler(req, res) {
         pickup_day_short: pickupDay.label,
         pickup_day_full: pickupDay.full_label,
         pickup_window: serie.pickup.window,
-        pickup_location: serie.pickup.location,
+        pickup_location_html: serie.pickup.location_html,
+        pickup_location_link: serie.pickup.location_link,
         customer_name: name,
         customer_email: email
       }

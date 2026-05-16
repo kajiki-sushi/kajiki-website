@@ -6,7 +6,7 @@
     "max_quantity_per_order": 6
   },
   "pickup": {
-    "location": "Les Poissons d'Abord, Montpellier",
+    "location_html": "Les Poissons d'Abord<br>50 Place Rudolph Brazda<br>Montpellier",
     "location_link": "https://maps.app.goo.gl/NMJTzAGJtvntVbfQ6",
     "window": "15h — 18h",
     "days": [
