@@ -18,6 +18,7 @@
     openTrigger.addEventListener('click', function (e) {
       e.preventDefault();
       paiementScreen.classList.add('is-open');
+      paiementScreen.dispatchEvent(new CustomEvent('paiement:open'));
       requestAnimationFrame(function () {
         paiementScreen.scrollIntoView({ behavior: 'smooth' });
       });

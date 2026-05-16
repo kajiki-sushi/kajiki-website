@@ -65,7 +65,7 @@
     };
 
     const elements = stripe.elements({
-      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=swap' }],
+      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=block' }],
     });
 
     cardNumber = elements.create('cardNumber', { style: cardStyle, showIcon: false, disableLink: true, placeholder: 'No. de carte' });
@@ -120,10 +120,10 @@
   }
 
   function init() {
-    window.addEventListener('hashchange', function () {
-      if (window.location.hash === '#paiement') initStripe();
-    });
-    if (window.location.hash === '#paiement') initStripe();
+    const paiementEl = document.getElementById('paiement');
+    if (paiementEl) {
+      paiementEl.addEventListener('paiement:open', initStripe);
+    }
 
     const submitBtn = document.querySelector('.paiement-form .button--full');
     if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
