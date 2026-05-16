@@ -42,18 +42,21 @@
     initialised = true;
     stripe = Stripe(window.KAJIKI_STRIPE_PK);
 
-    const root         = getComputedStyle(document.documentElement);
-    const fontSize     = root.getPropertyValue('--text-body').trim()          || '10px';
+    const root          = getComputedStyle(document.documentElement);
+    const fontSize      = root.getPropertyValue('--text-body').trim()           || '10px';
     const letterSpacing = root.getPropertyValue('--letter-spacing-text').trim() || '0.03em';
+    const colorBase     = root.getPropertyValue('--color-base').trim()          || '17 17 17';
+    const opacityQuiet  = root.getPropertyValue('--opacity-quiet').trim()       || '0.7';
+    const rgb           = colorBase.split(' ').join(',');
 
     const cardStyle = {
       base: {
         fontFamily:    "'Inter', Helvetica, sans-serif",
         fontSize:      fontSize,
         fontWeight:    '200',
-        color:         'rgb(17,17,17)',
+        color:         `rgb(${rgb})`,
         letterSpacing: letterSpacing,
-        '::placeholder': { color: 'rgba(17,17,17,0.7)' },
+        '::placeholder': { color: `rgba(${rgb},${opacityQuiet})` },
       },
       invalid: {
         color:     'rgb(17,17,17)',
@@ -61,7 +64,9 @@
       },
     };
 
-    const elements = stripe.elements();
+    const elements = stripe.elements({
+      fonts: [{ cssSrc: 'https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=swap' }],
+    });
 
     cardNumber = elements.create('cardNumber', { style: cardStyle, showIcon: false, disableLink: true, placeholder: 'No. de carte' });
     cardExpiry = elements.create('cardExpiry', { style: cardStyle, placeholder: 'MM / AA' });

@@ -1,0 +1,64 @@
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAJIKI® — ID de Retrait</title>
+</head>
+<body style="margin:0; padding:0; background:#ffffff; color:#111111; font-family:Inter, Arial, Helvetica, sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse; width:100%;">
+    <tr>
+      <td align="center" style="padding:28px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="max-width:560px; width:100%;">
+
+          <!-- Code -->
+          <tr>
+            <td align="center" style="padding:28px 0 58px 0; font-size:48px; letter-spacing:0.02em; font-weight:500;">
+              {{5.pickup_code}}
+            </td>
+          </tr>
+
+          <!-- Specsheet -->
+          <tr>
+            <td style="padding:0 0 44px 0;">
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0"
+                style="width:100%; max-width:300px; margin:0 auto; font-size:12px; line-height:1.6; border-collapse:collapse;">
+
+                <!-- Retrait -->
+                <tr>
+                  <td valign="top" style="width:90px; padding:10px 16px; border-bottom:1px solid #d4d4d4;">Retrait</td>
+                  <td style="width:1px; background:#d4d4d4;"></td>
+                  <td valign="top" style="padding:10px 16px; border-bottom:1px solid #d4d4d4;">{{5.pickup_day_full}}<br>{{5.pickup_window}}</td>
+                </tr>
+
+                <!-- Commande -->
+                <tr>
+                  <td valign="top" style="padding:10px 16px; border-bottom:1px solid #d4d4d4;">Commande</td>
+                  <td style="background:#d4d4d4;"></td>
+                  <td valign="top" style="padding:10px 16px; border-bottom:1px solid #d4d4d4;">{{5.series_name}}<br>Qté {{5.quantity}}</td>
+                </tr>
+
+                <!-- Lieu -->
+                <tr>
+                  <td style="padding:10px 16px;">Lieu</td>
+                  <td style="background:#d4d4d4;"></td>
+                  <td style="padding:10px 16px;">{{5.pickup_location}}</td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Instruction -->
+          <tr>
+            <td align="center" style="font-size:12px; line-height:1.5;">
+              Présenter lors du Retrait<br>
+              <a href="https://kajiki.fr/pages/annulations.html" style="color:#111111; text-decoration:underline;">Annulations</a>
+            </td>
+          </tr>
+
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,12 +1,30 @@
 # KAJIKI — Design Guidelines
 
-*Version 1.2 — May 2026*
+*Version 1.3 — May 2026*
 *Internal reference. Pairs with KAJIKI_Positioning_v5.md and KAJIKI_Communication_v1.md.*
 *Specific values (type sizes, spacing tokens, breakpoint values) live in the CSS. This doc holds the principles.*
+
+*Update from v1.2: Added Foolproof launch checklist — Airtable record must exist before `active: true` is set in `serie.json`. Silent data loss otherwise.*
 
 *Update from v1.1: Fields are underlined rather than boxed; underline opacity follows the text-link convention (rest → hover/focus). Added paiement screen on index — the PRÉCOMMANDER button now scrolls to an in-page payment form rather than navigating to a separate page. Orphaned /pages/precommande.html removed.*
 
 *Update from v1: Added footer active-state specification and history-restored state (smooth scroll on back navigation via quiet links). All quiet links site-wide now use `aria-current="page"` for unified current-page detection.*
+
+---
+
+## Foolproof — Launching a new Série
+
+**Before setting `"active": true` in `data/serie.json`, the Série record must already exist in Airtable.**
+
+Order of operations — do not skip, do not reorder:
+
+1. **Airtable first.** Create the Série record in Airtable (name, dates, pickup details). Without it, Make has nowhere to write the order data when a payment comes in.
+2. **Update `data/serie.json`.** Set prices, pickup days, and dates to match. Commit and push.
+3. **Update `index.html`.** Sync the visible copy (title, price, specsheet, dates) with `serie.json`. Also update the `data-full-label` attribute on each day option in the retrait selector (e.g. `data-full-label="Jeudi 28 mai"`) — the paiement recap text is generated from these at runtime.
+4. **Set `"active": true` in `serie.json`.** Only once steps 1–3 are done.
+5. **Remove the `"upcoming"` entry** from `js/archive.js` to exit dormant state.
+
+If you set `active: true` without the Airtable record in place, payments will go through but orders will fail to log — silent data loss.
 
 ---
 
@@ -104,4 +122,4 @@ This doc holds the principles. The CSS holds the values. The positioning doc hol
 
 ---
 
-*End of v1.1.*
+*End of v1.3.*

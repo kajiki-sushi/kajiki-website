@@ -542,9 +542,6 @@ body.is-dormant #paiement {
   transition: color var(--duration-fast) ease;
 }
 
-.select-option:not(:last-child) {
-  border-bottom: 1px solid var(--color-underline);
-}
 
 .select-option:hover,
 .select-option[aria-selected="true"] {
@@ -631,7 +628,7 @@ body.is-dormant #paiement {
 }
 
 .specsheet--admin .specsheet-row {
-  grid-template-columns: 162px 1px 1fr; /* FLAG: hardcoded column widths */
+  grid-template-columns: 35% 1px 1fr;
 }
 
 .specsheet--admin .specsheet-divider {
@@ -759,9 +756,17 @@ body.is-dormant #paiement {
 }
 
 /* Paiement form
-   Inline payment screen reached by scrolling from the PRÉCOMMANDER button.
+   Hidden by default; shown when PRÉCOMMANDER is clicked (JS adds .is-open).
    Width matches --specsheet-width so the form sits in the same visual frame
    as the design specsheets on adjacent screens. */
+
+#paiement {
+  display: none;
+}
+
+#paiement.is-open {
+  display: flex;
+}
 
 .paiement-form {
   width: var(--specsheet-width);
@@ -827,7 +832,7 @@ body.is-dormant #paiement {
   color: var(--color-text);
   opacity: var(--opacity-ui);
   transition: opacity var(--duration-snap) ease;
-  z-index: 10;
+  z-index: 110;
 }
 
 .paiement-close:hover {

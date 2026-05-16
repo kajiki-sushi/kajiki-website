@@ -7,6 +7,7 @@
   },
   "pickup": {
     "location": "Les Poissons d'Abord, Montpellier",
+    "location_link": "https://maps.app.goo.gl/NMJTzAGJtvntVbfQ6",
     "window": "15h — 18h",
     "days": [
       { "value": "jeudi",    "label": "Jeudi",    "full_label": "Jeudi 28 mai" },
