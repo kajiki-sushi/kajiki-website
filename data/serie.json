@@ -1,5 +1,5 @@
 {
-  "active": true,
+  "active": false,
   "series": {
     "name": "Série 02",
     "price_per_unit_cents": 12000,
