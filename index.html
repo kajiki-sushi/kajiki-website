@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KAJIKI®</title>
+  <meta name="description" content="Séries KAJIKI®. Sushi méditerranéen en plateau — Montpellier. Série mensuelle composée à partir des meilleurs arrivages de la criée de Sète." />
   <link rel="icon" type="image/png" href="assets/icons/favicon.png?v=10" />
   <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png?v=10" />
 
@@ -25,18 +26,12 @@
 
 <body>
   <header class="site-header">
-    <a href="index.html" class="signature">KAJIKI<sup>®</sup></a>
+    <a href="/" class="signature">KAJIKI<sup>®</sup></a>
   </header>
 
   <main>
 
-    <!-- ============================================================
-         POUR LANCER UNE SÉRIE :
-           1. Mettre à jour les blocs SÉRIE et RETRAIT ci-dessous.
-           2. Retirer l'entrée "upcoming" en tête de js/archive.js.
-         POUR PASSER EN DORMANT :
-           Ajouter une entrée "upcoming" en tête de js/archive.js.
-         ============================================================ -->
+    <!-- Série data: edit data/serie.json -->
 
     <section id="intro" class="screen">
       <div class="page-content">
@@ -46,7 +41,6 @@
           Sushi de la criée de Sète
         </p>
       </div>
-
     </section>
 
     <section id="product" class="screen">
@@ -57,47 +51,41 @@
       </div>
     </section>
 
-    <!-- ============================================================
-         SÉRIE — données variables (à mettre à jour à chaque série)
-         Titre :  Série 02
-         Prix :   120€
-         Dates :  23 au 25 mai
-         ============================================================ -->
     <section id="serie" class="screen">
       <div class="page-content">
 
-        <h2 class="display-title">Série 02</h2>
+        <h2 class="display-title" data-serie-number></h2>
 
-        <!-- specsheet — stable, à modifier en session longue -->
         <div class="specsheet--design">
           <div class="specsheet-row">
-            <span class="specsheet-label">Composition</span>
-            <span class="specsheet-value">32-42 pièces</span>
+            <span class="specsheet-label">Dates</span>
+            <span class="specsheet-value" data-serie-dates></span>
           </div>
           <div class="specsheet-row">
-            <span class="specsheet-label">Poissons</span>
-            <span class="specsheet-value">2-3 espèces</span>
-          </div>
-          <div class="specsheet-row">
-            <span class="specsheet-label">Format</span>
+            <span class="specsheet-label">Plateau</span>
             <span class="specsheet-value">2 pers.</span>
+          </div>
+          <div class="specsheet-row">
+            <span class="specsheet-label">Prix</span>
+            <span class="specsheet-value" data-serie-price></span>
           </div>
         </div>
 
         <p class="body-text">
-          Disponible en précommande : 120€<br>
-          En retrait les 29-30 mai
+          En précommande jusqu'au <span data-serie-deadline></span>.<br>Pêche après clôture.
         </p>
 
       </div>
     </section>
 
-    <!-- ============================================================
-         RETRAIT — données variables (à mettre à jour à chaque série)
-         Lieu :    Les Poissons d'Abord, Montpellier
-         Lieu URL: #
-         Horaire : 15h — 18h
-         ============================================================ -->
+    <section id="product-2" class="screen">
+      <div class="page-content">
+        <div class="single-image-frame-portrait">
+          <img src="assets/images/samples-1.jpg" alt="Composition de la série en cours">
+        </div>
+      </div>
+    </section>
+
     <section id="retrait" class="screen">
       <div class="page-content">
 
@@ -107,30 +95,22 @@
           <div class="specsheet--design">
             <div class="specsheet-row">
               <span class="specsheet-label">Lieu</span>
-              <a href="https://maps.app.goo.gl/NMJTzAGJtvntVbfQ6" class="specsheet-value text-link" target="_blank" rel="noopener">Les Poissons d'Abord,<br>Montpellier</a>
+              <a data-serie-location href="#" class="specsheet-value text-link" target="_blank" rel="noopener"></a>
             </div>
             <div class="specsheet-row">
               <span class="specsheet-label">Horaire</span>
-              <span class="specsheet-value">15h — 18h</span>
+              <span class="specsheet-value" data-serie-hours></span>
             </div>
           </div>
-          <a href="#paiement" class="button-link button-link--full">PRÉCOMMANDER</a>
+          <a href="#payment" class="button-link button-link--full">PRÉCOMMANDER</a>
         </div>
 
       </div>
-
     </section>
 
-    <!-- ============================================================
-         PAIEMENT — données variables (à mettre à jour à chaque série)
-         Prix unitaire :  120€  (voir js/paiement.js)
-         Détail :         1 plateau pour 2 personnes.
-                          À retirer le jeudi 23 mai.
-         Jours :          Jeudi / Vendredi / Samedi
-         ============================================================ -->
-    <section id="paiement" class="screen">
+    <section id="payment" class="screen">
 
-      <a href="#retrait" class="paiement-close" aria-label="Fermer">
+      <a href="#retrait" class="payment-close" aria-label="Fermer">
         <svg viewBox="0 0 24 24" aria-hidden="true">
           <path d="M5 5 L19 19 M19 5 L5 19" />
         </svg>
@@ -138,12 +118,12 @@
 
       <div class="page-content">
 
-        <div class="paiement-form">
+        <div class="payment-form">
 
-          <div class="paiement-summary">
-            <div class="paiement-selects">
+          <div class="payment-summary">
+            <div class="payment-selects">
 
-              <div class="select" data-paiement-quantity>
+              <div class="select" data-payment-quantity>
                 <button type="button" class="field select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Quantité">
                   <span class="select-value">1</span>
                   <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
@@ -160,36 +140,35 @@
                 </ul>
               </div>
 
-              <div class="select" data-paiement-day>
+              <div class="select" data-payment-day>
                 <button type="button" class="field select-trigger" aria-haspopup="listbox" aria-expanded="false" aria-label="Jour de retrait">
-                  <span class="select-value">Jeudi</span>
+                  <span class="select-value"></span>
                   <svg class="select-chevron" viewBox="0 0 24 24" aria-hidden="true">
                     <path d="M6 15 L12 9 L18 15" />
                   </svg>
                 </button>
                 <ul class="select-menu" role="listbox" hidden>
-                  <li class="select-option" role="option" data-value="samedi"   data-full-label="Samedi 30 mai">Samedi</li>
-                  <li class="select-option" role="option" data-value="vendredi" data-full-label="Vendredi 29 mai">Vendredi</li>
-                  <li class="select-option" role="option" data-value="jeudi"    data-full-label="Jeudi 28 mai" aria-selected="true">Jeudi</li>
                 </ul>
               </div>
 
             </div>
-            <div class="paiement-summary-text">
-              <p class="body-text-medium">Total : <span data-paiement-total>120€</span></p>
-              <p class="detail-text" data-paiement-detail></p>
+            <div class="payment-summary-text">
+              <p class="body-text-medium">Total : <span data-payment-total></span></p>
+              <p class="detail-text" data-payment-detail></p>
             </div>
           </div>
 
-          <div class="paiement-fields">
-            <input id="paiement-email" name="email" type="email" class="field" placeholder="Email" autocomplete="email" data-paiement-email>
-            <input id="paiement-name" name="name" type="text" class="field" placeholder="Nom du titulaire" autocomplete="cc-name" data-paiement-name>
-            <div class="field paiement-card-unified">
+          <div class="payment-fields">
+            <input id="paiement-email" name="email" type="email" class="field" placeholder="Email" autocomplete="email" data-payment-email>
+            <input id="paiement-name" name="name" type="text" class="field" placeholder="Nom du titulaire" autocomplete="cc-name" data-payment-name>
+            <div class="field payment-card-unified">
               <div id="card-number-element" class="stripe-element"></div>
               <div id="card-expiry-element" class="stripe-element"></div>
               <div id="card-cvc-element"    class="stripe-element"></div>
             </div>
           </div>
+
+          <p class="detail-text payment-error" hidden>Paiement temporairement indisponible. Veuillez recharger la page.</p>
 
           <button type="button" class="button button--full">CONFIRMER</button>
 
@@ -230,9 +209,9 @@
   <script src="js/footer.js?v=10"></script>
   <script src="js/navigation.js?v=10"></script>
   <script src="js/notifications.js?v=10"></script>
-  <script src="js/archive.js?v=10"></script>
-  <script src="js/select.js?v=10"></script>
-  <script src="js/paiement.js?v=10"></script>
-  <script src="js/stripe.js?v=10"></script>
+  <script src="js/serie.js?v=4"></script>
+  <script src="js/select.js?v=11"></script>
+  <script src="js/payment.js?v=12"></script>
+  <script src="js/stripe.js?v=11"></script>
 </body>
 </html>

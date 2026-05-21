@@ -5,6 +5,21 @@
     history.scrollRestoration = 'manual';
   }
 
+  // Scroll-down button: smooth on desktop, instant on mobile
+  document.addEventListener('click', function (event) {
+    var btn = event.target.closest('.scroll-down-btn');
+    if (!btn) return;
+    var targetId = btn.getAttribute('href').replace('#', '');
+    var target = document.getElementById(targetId);
+    if (!target) return;
+    event.preventDefault();
+    var isDesktop = window.matchMedia('(min-width: 800px)').matches;
+    var top = target.getBoundingClientRect().top + window.scrollY;
+    isDesktop
+      ? window.scrollTo({ top: top, behavior: 'smooth' })
+      : window.scrollTo(0, top);
+  });
+
   // Before navigating away via a quiet link, save the screen the link lives in
   document.addEventListener('click', function (event) {
     const link = event.target.closest('.quiet-link');

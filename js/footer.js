@@ -8,10 +8,10 @@ function getFooterContext() {
     currentPage,
     isInPages,
     base,
-    isAllergens:   currentPage === "allergenes.html",
-    isAnnulations: currentPage === "annulations.html",
-    isPrivacy:     currentPage === "confidentialite.html",
-    isContact:     currentPage === "contact.html"
+    isAllergens:   currentPage === "allergenes",
+    isCancellations: currentPage === "annulations",
+    isPrivacy:     currentPage === "confidentialite",
+    isContact:     currentPage === "contact"
   };
 }
 
@@ -23,20 +23,20 @@ function buildFooter() {
   const ctx = getFooterContext();
 
   const leftLinks = [
-    buildFooterLink({ href: `${ctx.base}contact.html`,                  label: "Contact",          isActive: ctx.isContact }),
-    buildFooterLink({ href: `${ctx.base}allergenes.html`,               label: "Allergènes",      isActive: ctx.isAllergens }),
-    buildFooterLink({ href: `${ctx.base}annulations.html`,              label: "Annulations",     isActive: ctx.isAnnulations }),
-    buildFooterLink({ href: `${ctx.base}confidentialite.html`, label: "Confidentialité", isActive: ctx.isPrivacy })
+    buildFooterLink({ href: `${ctx.base}contact`,                  label: "Contact",          isActive: ctx.isContact }),
+    buildFooterLink({ href: `${ctx.base}allergenes`,               label: "Allergènes",      isActive: ctx.isAllergens }),
+    buildFooterLink({ href: `${ctx.base}annulations`,              label: "Annulations",     isActive: ctx.isCancellations }),
+    buildFooterLink({ href: `${ctx.base}confidentialite`, label: "Confidentialité", isActive: ctx.isPrivacy })
   ].join("");
 
   const rightLinks = [
     buildFooterLink({ href: "https://www.instagram.com/sushi.kajiki/", label: "Instagram",        isExternal: true }),
-    buildFooterLink({ href: `${ctx.base}series-suivantes.html`,        label: "Séries suivantes" })
+    buildFooterLink({ href: `${ctx.base}series-suivantes`,        label: "Séries suivantes" })
   ].join("");
 
   return `
     <div class="footer-layout">
-      <div class="footer-col footer-col--left">
+      <div class="footer-col">
         ${leftLinks}
       </div>
       <div class="footer-col footer-col--right">

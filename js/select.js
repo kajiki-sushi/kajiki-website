@@ -39,7 +39,7 @@
   function init() {
     document.querySelectorAll(".select").forEach(function (select) {
       const trigger = select.querySelector(".select-trigger");
-      const options = select.querySelectorAll(".select-option");
+      const menu    = select.querySelector(".select-menu");
 
       trigger.addEventListener("click", function (event) {
         event.stopPropagation();
@@ -51,11 +51,12 @@
         }
       });
 
-      options.forEach(function (option) {
-        option.addEventListener("click", function () {
-          selectOption(select, option);
-          closeSelect(select);
-        });
+      // Delegated: handles options added dynamically after init
+      menu.addEventListener("click", function (event) {
+        var option = event.target.closest(".select-option");
+        if (!option) return;
+        selectOption(select, option);
+        closeSelect(select);
       });
     });
 

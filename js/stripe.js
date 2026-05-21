@@ -4,7 +4,7 @@
    Mounts individual cardNumber / cardExpiry / cardCvc elements
    (styled to match the design system) on first entry to
    #paiement. Confirms payment on submit via confirmCardPayment,
-   then redirects to /pages/merci.html on success.
+   then redirects to /pages/confirmation on success.
    ============================================================ */
 
 (function () {
@@ -12,34 +12,41 @@
   let cardNumber  = null;
   let cardExpiry  = null;
   let cardCvc     = null;
-  let initialised = false;
+  let initialized = false;
 
   function getQty() {
-    const opt = document.querySelector('[data-paiement-quantity] .select-option[aria-selected="true"]');
+    const opt = document.querySelector('[data-payment-quantity] .select-option[aria-selected="true"]');
     return opt ? parseInt(opt.dataset.value, 10) : 1;
   }
 
   function getDay() {
-    const opt = document.querySelector('[data-paiement-day] .select-option[aria-selected="true"]');
+    const opt = document.querySelector('[data-payment-day] .select-option[aria-selected="true"]');
     return opt ? opt.dataset.value : '';
   }
 
   function getEmail() {
-    const el = document.querySelector('[data-paiement-email]');
+    const el = document.querySelector('[data-payment-email]');
     return el ? el.value.trim() : '';
   }
 
   function getName() {
-    const el = document.querySelector('[data-paiement-name]');
+    const el = document.querySelector('[data-payment-name]');
     return el ? el.value.trim() : '';
   }
 
-  function initStripe() {
-    if (initialised) return;
-    if (typeof Stripe === 'undefined') { console.error('Stripe.js not loaded.'); return; }
-    if (!window.KAJIKI_STRIPE_PK)     { console.error('Stripe publishable key missing.'); return; }
+  function showFatalError() {
+    var errEl = document.querySelector('.payment-error');
+    if (errEl) errEl.hidden = false;
+    var btn = document.querySelector('.payment-form .button--full');
+    if (btn) btn.disabled = true;
+  }
 
-    initialised = true;
+  function initStripe() {
+    if (initialized) return;
+    if (typeof Stripe === 'undefined') { console.error('Stripe.js not loaded.'); showFatalError(); return; }
+    if (!window.KAJIKI_STRIPE_PK)     { console.error('Stripe publishable key missing.'); showFatalError(); return; }
+
+    initialized = true;
     stripe = Stripe(window.KAJIKI_STRIPE_PK);
 
     const root          = getComputedStyle(document.documentElement);
@@ -116,16 +123,16 @@
       return;
     }
 
-    window.location.href = '/pages/merci.html';
+    window.location.href = '/pages/confirmation';
   }
 
   function init() {
-    const paiementEl = document.getElementById('paiement');
-    if (paiementEl) {
-      paiementEl.addEventListener('paiement:open', initStripe);
+    const paymentEl = document.getElementById('payment');
+    if (paymentEl) {
+      paymentEl.addEventListener('payment:open', initStripe);
     }
 
-    const submitBtn = document.querySelector('.paiement-form .button--full');
+    const submitBtn = document.querySelector('.payment-form .button--full');
     if (submitBtn) submitBtn.addEventListener('click', handleSubmit);
   }
 
