@@ -11,7 +11,8 @@ function getFooterContext() {
     isAllergens:   currentPage === "allergenes",
     isCancellations: currentPage === "annulations",
     isPrivacy:     currentPage === "confidentialite",
-    isContact:     currentPage === "contact"
+    isContact:     currentPage === "contact",
+    isRetrait:     currentPage === "retrait"
   };
 }
 
@@ -24,6 +25,7 @@ function buildFooter() {
 
   const leftLinks = [
     buildFooterLink({ href: `${ctx.base}contact`,                  label: "Contact",          isActive: ctx.isContact }),
+    buildFooterLink({ href: `${ctx.base}retrait`,                  label: "Retraits",          isActive: ctx.isRetrait }),
     buildFooterLink({ href: `${ctx.base}allergenes`,               label: "Allergènes",      isActive: ctx.isAllergens }),
     buildFooterLink({ href: `${ctx.base}annulations`,              label: "Annulations",     isActive: ctx.isCancellations }),
     buildFooterLink({ href: `${ctx.base}confidentialite`, label: "Confidentialité", isActive: ctx.isPrivacy })

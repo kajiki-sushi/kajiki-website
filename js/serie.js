@@ -3,7 +3,9 @@
    ============================================================
    Fetches /data/serie.json + /data/archive.json. Populates all
    variable content: série screen, retrait screen, payment day
-   options, archive. Sets body.is-dormant when active is false.
+   options, archive. Sets body.is-closed when deadline has passed
+   on an otherwise-active série (screens stay, button locks);
+   body.is-dormant when no série is active (screens hidden).
    Schedule (Jeu·18h–22h ...) is generated from days[].
    Exposes window.KAJIKI_SERIE_READY (Promise) for payment.js.
    ============================================================ */
@@ -15,7 +17,10 @@ window.KAJIKI_SERIE_READY = Promise.all([
   var data = results[0];
   data.archive = results[1];
   // Deadline auto-flips active → false. Single source of truth downstream.
+  // wasActive distinguishes "deadline passed" (is-closed) from "no série" (is-dormant).
+  var wasActive = data.active === true;
   if (data.active && isPastDeadline(data.series)) data.active = false;
+  data._wasActive = wasActive;
   window.KAJIKI_SERIE = data;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { render(data); });
@@ -31,7 +36,15 @@ function isPastDeadline(series) {
 }
 
 function render(data) {
-  if (!data.active) document.body.classList.add('is-dormant');
+  if (!data.active) {
+    if (data._wasActive) {
+      document.body.classList.add('is-closed');
+      var preorderBtn = document.querySelector('a.button-link--full[href="#payment"]');
+      if (preorderBtn) preorderBtn.classList.add('is-disabled');
+    } else {
+      document.body.classList.add('is-dormant');
+    }
+  }
 
   setText('[data-serie-number]',   data.series.name);
   setText('[data-serie-dates]',    data.series.dates);

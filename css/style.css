@@ -244,6 +244,13 @@ body.is-dormant #payment {
   display: none;
 }
 
+/* Closed: deadline passed on an otherwise-active série.
+   Série/retrait screens stay; payment is hidden and the
+   PRÉCOMMANDER button receives .is-disabled from serie.js. */
+body.is-closed #payment {
+  display: none;
+}
+
 .site-header {
   position: absolute;
   top: var(--screen-padding);
