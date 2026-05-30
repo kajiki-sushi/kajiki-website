@@ -1,0 +1,6 @@
+# Local admin print sheets. Templates pull from the site's CSS
+# at runtime (../css/style.css) so they have to live inside the
+# repo folder for design coherence — but they must never be
+# pushed: filled versions contain client names and pickup codes,
+# and even empty templates would deploy to a public URL on Vercel.
+/admin/
