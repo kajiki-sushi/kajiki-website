@@ -1,14 +1,7 @@
 [
   {
-    "upcoming": true,
-    "header": "02",
-    "cell_1": "Série en préparation<br>Juin 2026",
-    "cell_2": "Être Notifié",
-    "cell_2_url": "pages/series-suivantes"
-  },
-  {
     "header": "01",
-    "cell_1": "Avril 2026",
-    "cell_2": "Thon Rouge"
+    "cell_1": "Thon Rouge",
+    "cell_2": "Avril 2026<br>Série archivée"
   }
 ]

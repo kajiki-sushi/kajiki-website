@@ -19,12 +19,11 @@ Order of operations:
    - `series.price_per_unit_cents` (Stripe expects cents)
    - `series.max_total_quantity` (inventory cap — see Safeguards)
    - `pickup.days[]` — each day's `full_label` and `window`
-3. **Edit `data/archive.json`** if needed: remove or update the `upcoming: true` entry.
-4. **Flip `active: true`** in `data/serie.json`.
+3. **Flip `active: true`** in `data/serie.json`.
 
 To go dormant after a series:
 1. In `data/serie.json` set `active: false`, update `series.name` to the next series.
-2. In `data/archive.json` prepend the completed entry. Optionally add an `upcoming: true` entry announcing what's next.
+2. In `data/archive.json` prepend the completed entry.
 
 The deadline auto-flips dormant when reached — no manual intervention needed at the cutoff moment. Both API and front-end honor this. Inventory also auto-closes orders once `max_total_quantity` is reached.
 
@@ -34,7 +33,7 @@ The deadline auto-flips dormant when reached — no manual intervention needed a
 
 Mobile-first. Default layout is mobile; tablet and desktop are exceptions handled by token redefinition at one breakpoint (`800px`).
 
-Aesthetic: minimalist, brutalist, laboratory. Black text (`#111`), white background. Opacity is the only modulation — no color is added to the system. Every visual decision that would use color elsewhere uses opacity here.
+Aesthetic: minimalist, brutalist, laboratory. Black text (`#111`), white background. Opacity is the only modulation — no color is added to the system. Every visual decision that would use color elsewhere uses opacity here. Reduced opacity is reserved for interactive states only (quiet links at rest, hover, disabled) — never applied to static text as a hierarchy or secondary-info device.
 
 Goal message: controlled, surgical. A brand that studies things, and the studying is resolved.
 
@@ -46,7 +45,7 @@ Operational state lives in JSON, not in HTML or JS. `index.html` carries only st
 
 **`data/serie.json`** — live state. Fields are grouped by visibility frequency: things you edit every série at top of each block, stable things at bottom. Loaded by `serie.js`, populated into the DOM via `data-serie-*` hooks. Used server-side too by `api/create-payment-intent.js` for amount calculation and Stripe metadata.
 
-**`data/archive.json`** — append-only history. Each entry: `header` (big numeral above), `cell_1`, `cell_2`. Optional `cell_2_url` converts cell 2 into a link. Optional `upcoming: true` shows the entry only when site is dormant. Field names are visual on purpose — `cell_1`, `cell_2` map directly to the two stacked rows in the archive widget.
+**`data/archive.json`** — append-only history. Each entry: `header` (big numeral above), `cell_1`, `cell_2`. Optional `cell_2_url` converts cell 2 into a link. Field names are visual on purpose — `cell_1`, `cell_2` map directly to the two stacked rows in the archive widget.
 
 Both files are served with `Cache-Control: no-store` (set in `vercel.json`) — updates show immediately, no stale browser caches.
 
@@ -66,7 +65,7 @@ The split exists so the live operational payload (`serie.json`) stays small and 
 
 **Footer.** Rendered by `footer.js` into `#site-footer` at the bottom of the last screen on any page. Two columns — left for admin/info links, right for brand/external links — but the exact links in each column are not fixed by this doc. Footer links are quiet links; `aria-current="page"` marks the current page link at full opacity.
 
-**Dormant state.** When no Série is active, `serie.js` adds `body.is-dormant`. Specific screens are hidden via the `body.is-dormant` selector in CSS. The archive screen with its upcoming entry remains visible. The dormant state is a designed state, not the absence of one.
+**Dormant state.** When no Série is active, `serie.js` adds `body.is-dormant`. Specific screens are hidden via the `body.is-dormant` selector in CSS. The archive screen remains visible. The dormant state is a designed state, not the absence of one.
 
 ---
 
@@ -204,9 +203,29 @@ Price is always computed server-side from `serie.json` — the client cannot inf
 
 ---
 
+## Design assets
+
+Static design files (Instagram stories, print menus, future formats) live in `design/`. Each is a self-contained HTML file sized for its output format.
+
+**`design/tokens.css`** — shared source of truth for all templates. Mirrors the site's `:root` tokens: font family, weights, tracking, colors, opacity values. Every template imports it via `<link rel="stylesheet" href="tokens.css">`. Template-specific layout CSS stays in the HTML file itself.
+
+To change the font or any global token across all templates: edit `tokens.css` only.
+
+**Naming convention:** `[format]-[subject].html` — e.g. `story-serie.html`, `menu-a4.html`.
+
+**Export workflow (Chrome DevTools):**
+1. Open the HTML file in Chrome.
+2. DevTools → device toolbar → custom size matching the canvas dimensions.
+3. Three-dot menu → "Capture screenshot" → exact-pixel PNG saved to Downloads.
+4. Transfer to phone → upload as story or send to printer.
+
+**What to edit per série** is documented in a comment block at the top of each template's `<style>` tag.
+
+---
+
 ## Use
 
-This doc holds the principles. The CSS holds the visual values. The `data/*.json` files hold the operational state. The positioning doc holds the brand. The communication doc holds the voice. When all of them agree, the system is intact.
+This doc holds the principles. The CSS holds the visual values. The `data/*.json` files hold the operational state. The `design/` folder holds static design assets. The positioning doc holds the brand. The communication doc holds the voice. When all of them agree, the system is intact.
 
 ---
 

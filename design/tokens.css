@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=swap');
+
+:root {
+  --ink: #111;
+  --paper: #fff;
+
+  --font: 'Inter', sans-serif;
+  --weight-light: 200;
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  --tracking-tight: -0.01em;
+  --tracking-normal: 0.01em;
+  --tracking-wide: 0.04em;
+
+  --opacity-secondary: 0.4;
+}

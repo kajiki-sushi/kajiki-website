@@ -113,9 +113,7 @@ function buildDayOptions(days) {
 
 function renderArchive(data) {
   var archive     = data.archive || [];
-  var displayData = data.active
-    ? archive.filter(function (e) { return !e.upcoming; })
-    : archive;
+  var displayData = archive;
 
   if (!displayData.length) return;
 

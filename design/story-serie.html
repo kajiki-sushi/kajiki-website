@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>KAJIKI — Story Série</title>
+  <link rel="stylesheet" href="tokens.css">
+  <style>
+    /* ---- Edit per Série ----
+       .number    ->  Série 02 / 03 / 04 ...
+       .state     ->  deadline date
+       .location  ->  city
+       ------------------------- */
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #d9d9d9;            /* preview backdrop only — not exported */
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 24px;
+      font-family: var(--font);
+    }
+
+    /* The exported canvas: exactly 1080 × 1920 (9:16) */
+    .story {
+      position: relative;
+      width: 1080px;
+      height: 1920px;
+      background: var(--paper);
+      color: var(--ink);
+      flex: 0 0 auto;
+    }
+
+    /* Centered block */
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translateY(-50%);
+      text-align: center;
+    }
+
+    .number {
+      font-weight: var(--weight-medium);
+      font-size: 137px;
+      line-height: 1;
+      letter-spacing: var(--tracking-tight);
+    }
+
+    .state {
+      margin-top: 96px;
+      font-weight: var(--weight-light);
+      font-size: 29px;
+      letter-spacing: var(--tracking-normal);
+    }
+
+    .location {
+      margin-top: 13px;
+      font-weight: var(--weight-light);
+      font-size: 29px;
+      letter-spacing: var(--tracking-normal);
+    }
+
+</style>
+</head>
+<body>
+  <div class="story">
+    <div class="center">
+      <div class="number">Série 02</div>
+      <div class="state">Précommande jusqu'au 11 juin</div>
+      <div class="location">Retrait à Montpellier</div>
+    </div>
+  </div>
+</body>
+</html>
