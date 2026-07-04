@@ -3,9 +3,10 @@
    ============================================================
    Fetches /data/serie.json + /data/archive.json. Populates all
    variable content: série screen, retrait screen, payment day
-   options, archive. Sets body.is-closed when deadline has passed
-   on an otherwise-active série (screens stay, button locks);
-   body.is-dormant when no série is active (screens hidden).
+   options, archive. A série is always visible. Closes preorders
+   (body.is-closed — série stays, PRÉCOMMANDER locks, payment hides)
+   when the deadline has passed, or when /api/serie-status reports
+   the série isn't orderable yet (its Airtable record is missing).
    Schedule (Jeu·18h–22h ...) is generated from days[].
    Exposes window.KAJIKI_SERIE_READY (Promise) for payment.js.
    ============================================================ */
@@ -16,11 +17,6 @@ window.KAJIKI_SERIE_READY = Promise.all([
 ]).then(function (results) {
   var data = results[0];
   data.archive = results[1];
-  // Deadline auto-flips active → false. Single source of truth downstream.
-  // wasActive distinguishes "deadline passed" (is-closed) from "no série" (is-dormant).
-  var wasActive = data.active === true;
-  if (data.active && isPastDeadline(data.series)) data.active = false;
-  data._wasActive = wasActive;
   window.KAJIKI_SERIE = data;
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', function () { render(data); });
@@ -35,15 +31,31 @@ function isPastDeadline(series) {
   return Date.now() >= new Date(series.preorder_deadline_iso).getTime();
 }
 
+function closePreorders(preorderBtn) {
+  document.body.classList.add('is-closed');
+  if (preorderBtn) preorderBtn.classList.add('is-disabled');
+}
+
+function verifyOrderable(preorderBtn) {
+  fetch('/api/serie-status')
+    .then(function (r) { return r.json(); })
+    .then(function (status) {
+      if (status && status.open === false) closePreorders(preorderBtn);
+    })
+    .catch(function () { /* fail open — leave preorders available */ });
+}
+
 function render(data) {
-  if (!data.active) {
-    if (data._wasActive) {
-      document.body.classList.add('is-closed');
-      var preorderBtn = document.querySelector('a.button-link--full[href="#payment"]');
-      if (preorderBtn) preorderBtn.classList.add('is-disabled');
-    } else {
-      document.body.classList.add('is-dormant');
-    }
+  var preorderBtn = document.querySelector('a.button-link--full[href="#payment"]');
+
+  if (isPastDeadline(data.series)) {
+    closePreorders(preorderBtn);
+  } else if (preorderBtn) {
+    // Deadline still open, but the série is only truly orderable once its
+    // Airtable record exists (so Make can log the order). Ask the server and
+    // lock the button before the customer opens the form. Fails open: a
+    // network/Airtable hiccup leaves preorders available (Make fallback).
+    verifyOrderable(preorderBtn);
   }
 
   setText('[data-serie-number]',   data.series.name);

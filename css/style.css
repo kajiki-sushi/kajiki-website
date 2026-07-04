@@ -26,9 +26,9 @@
     --color-underline-hover:  rgb(var(--color-base) / var(--opacity-underline-hover));
 
   /* Animation */
-  --duration-snap: 0.03s;   /* near-instant — quiet-link */
-  --duration-fast: 0.1s;    /* standard interactive feedback — buttons */
-  --duration-smooth: 0.2s;  /* measured — arrow nav */
+  --duration-snap: 0.08s;   /* near-instant — quiet-link */
+  --duration-fast: 0.12s;    /* standard interactive feedback — buttons */
+  --duration-smooth: 0.24s;  /* measured — arrow nav */
 
   /* Type */
   --font-family: 'Inter', Helvetica, sans-serif;
@@ -63,11 +63,11 @@
 
   --detail-gap: 4px;  /* between detail-text items */
   --button-gap: 16px;  /* gap adjacent to a button */
+  --specsheet-button-gap: calc(var(--button-gap) * 0.6);  /* gap between design specsheet and its button, in .specsheet-action-group only */
 
-  --cell-padding: 9px 14px;
+  --cell-padding: 12px 14px;
 
   /* Components */
-  --notification-field: 200px;
   --field-height: 30px;
   --button-height: 36px;
   --button-padding: 22px;
@@ -79,6 +79,9 @@
 
   /* Scroll-down button */
   --scroll-arrow-size: 44px;
+
+  /* Footer social icon */
+  --footer-icon-size: 26px;
 
 }
 
@@ -106,7 +109,6 @@
     --cell-padding: 14px 18px;
 
     /* Components */
-    --notification-field: 260px;
     --field-height: 40px;
     --button-height: 48px;
     --button-padding: 36px;
@@ -118,6 +120,9 @@
 
     /* Scroll-down button */
     --scroll-arrow-size: 56px;
+
+    /* Footer social icon */
+    --footer-icon-size: 32px;
 
   }
 }
@@ -237,16 +242,9 @@ main {
   opacity: 0;
 }
 
-body.is-dormant #product-2,
-body.is-dormant #serie,
-body.is-dormant #retrait,
-body.is-dormant #payment {
-  display: none;
-}
-
-/* Closed: deadline passed on an otherwise-active série.
-   Série/retrait screens stay; payment is hidden and the
-   PRÉCOMMANDER button receives .is-disabled from serie.js. */
+/* Closed: preorder deadline has passed. The série stays visible;
+   payment is hidden and the PRÉCOMMANDER button receives
+   .is-disabled from serie.js. */
 body.is-closed #payment {
   display: none;
 }
@@ -309,11 +307,22 @@ body.is-closed #payment {
   align-items: flex-end;
 }
 
-.footer-links-right {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: var(--detail-gap);
+.footer-social-link {
+  display: inline-flex;
+  width: var(--footer-icon-size);
+  height: var(--footer-icon-size);
+}
+
+.footer-social-link svg {
+  width: 100%;
+  height: 100%;
+}
+
+.footer-social-link rect,
+.footer-social-link circle {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.2;
 }
 
 .signature sup {
@@ -370,10 +379,6 @@ body.is-closed #payment {
 
 .field::placeholder {
   color: var(--color-quiet);
-}
-
-.field--button-height {
-  height: var(--button-height);
 }
 
 /* Select — custom dropdown.
@@ -526,7 +531,13 @@ body.is-closed #payment {
 
 .specsheet--admin {
   width: 100%;
-  max-width: 425px; /* FLAG: hardcoded max-width */
+  /* FLAG: hardcoded max-width and 0.85 mobile narrowing factor.
+     calc() is viewport-relative (not %) so the inset matches
+     .info-page's screen-padding consistently, whether the specsheet
+     sits on a footer page (already inset by its parent) or a screen
+     (no parent inset). The *0.85 narrows further below that inset,
+     mobile only — at/above 800px the 425px cap always wins. */
+  max-width: min(425px, calc((100vw - 2 * var(--screen-padding)) * 0.85));
 }
 
 .specsheet--admin .specsheet-row {
@@ -585,16 +596,9 @@ body.is-closed #payment {
   gap: var(--button-gap);
 }
 
-/* Notifications form */
-
-.notifications-input {
-  width: var(--notification-field);
-}
-
-.notifications-status {
-  margin-top: 4px; /* FLAG: hardcoded margin */
-  min-height: 16px; /* FLAG: hardcoded height */
-  text-align: center;
+.specsheet-action-group > .specsheet--design {
+  /* Shrinks only this gap; flex item margins don't collapse with `gap`. */
+  margin-bottom: calc(var(--specsheet-button-gap) - var(--button-gap));
 }
 
 /* Payment form
@@ -871,13 +875,6 @@ body.is-closed #payment {
 
 .text-link:hover {
   text-decoration-color: var(--color-underline-hover);
-}
-
-/* field + button side by side */
-.control-row {
-  display: flex;
-  align-items: center;
-  gap: var(--button-gap);
 }
 
 .button-link.is-disabled {

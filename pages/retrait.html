@@ -23,12 +23,36 @@
 
   <main>
 
-    <div class="info-page">
+    <section class="info-page">
       <div class="info-content">
         <h1 class="display-title info-title">Retraits</h1>
 
-        <p class="body-text">Le retrait se fait à l'adresse, au jour et au créneau<br>indiqués sur votre email de confirmation.</p>
+        <div class="specsheet--admin">
+          <div class="specsheet-row">
+            <div class="specsheet-label">Lieu</div>
+            <div class="specsheet-divider" aria-hidden="true"></div>
+            <a data-serie-location href="#" class="specsheet-value text-link" target="_blank" rel="noopener"></a>
+          </div>
 
+          <div class="specsheet-row">
+            <div class="specsheet-label">Horaire</div>
+            <div class="specsheet-divider" aria-hidden="true"></div>
+            <div class="specsheet-value" data-serie-hours></div>
+          </div>
+        </div>
+
+        <p class="body-text">Le retrait se fait à l'adresse, au jour et au créneau<br>indiqués sur votre email de confirmation.</p>
+      </div>
+
+      <a class="scroll-down-btn" href="#details" aria-label="Voir la section suivante">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 9 L12 18 L21 9" />
+        </svg>
+      </a>
+    </section>
+
+    <section id="details" class="info-page">
+      <div class="info-content">
         <div class="specsheet--admin">
           <div class="specsheet-row">
             <div class="specsheet-label">Présentation</div>
@@ -59,11 +83,12 @@
       </div>
 
       <div id="site-footer"></div>
-    </div>
+    </section>
 
   </main>
 
   <script src="../js/footer.js?v=10"></script>
   <script src="../js/navigation.js?v=10"></script>
+  <script src="../js/serie.js?v=5"></script>
 </body>
 </html>

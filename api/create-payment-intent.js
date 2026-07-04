@@ -8,11 +8,10 @@
 
    Guards (in order):
      1. Origin allowlist           — blocks naive curl spam
-     2. active flag                — manual on/off in serie.json
-     3. preorder_deadline_iso      — auto cutoff at timestamp
-     4. quantity + pickup_day      — input validation
-     5. email format               — basic regex
-     6. inventory cap              — sums succeeded intents for this
+     2. preorder_deadline_iso      — auto cutoff at timestamp
+     3. quantity + pickup_day      — input validation
+     4. email format               — basic regex
+     5. inventory cap              — sums succeeded intents for this
                                      series, refuses if next order
                                      would exceed max_total_quantity
    ============================================================ */
@@ -55,9 +54,6 @@ module.exports = async function handler(req, res) {
     return res.status(403).json({ error: 'Forbidden origin' });
   }
 
-  if (!serie.active) {
-    return res.status(403).json({ error: 'Préventes fermées' });
-  }
   if (isPastDeadline(serie.series)) {
     return res.status(403).json({ error: 'Date limite dépassée' });
   }

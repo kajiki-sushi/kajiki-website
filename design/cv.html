@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Angelo Stifani — CV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=block" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    /* Fixed A4 canvas. Structure is carried by a quiet left-margin label
+       column — same label/value logic as .specsheet--admin (label left,
+       value right). The content column then needs only two registers:
+         titles  — body-text-medium (14px / 500)  → the diploma + job titles
+         body    — body-text (12.5px / 200)        → intro, descriptions, lists
+       Spacing encodes grouping: 16px within a section, 32px between them. */
+
+    :root {
+      --text-display: 42px;
+      --text-body-medium: 14px;
+      --text-body: 12.5px;
+      --text-detail: 10px;
+      --letter-spacing-display: -0.02em;
+
+      --label-col: 130px;
+      --col-gap: 28px;
+      --row-gap: 38.4px;   /* section gap ×1.2 */
+      --role-gap: 16px;
+      --title-gap: 8px;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      background: #d9d9d9;  /* preview backdrop only — not exported */
+      padding: 24px;
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      background: var(--color-background);
+      padding: 22mm;
+      display: flex;
+      flex-direction: column;
+      flex: 0 0 auto;
+    }
+
+    /* Masthead — name + lede on the left, portrait on the right. Both
+       share the page's top edge; the portrait's right edge aligns with
+       the grid's content column below. */
+    .cv-masthead {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: var(--col-gap);
+      margin-bottom: var(--row-gap);
+    }
+
+    .cv-name {
+      margin-bottom: var(--row-gap);
+      white-space: nowrap;
+    }
+
+    .cv-lede {
+      max-width: 470px;  /* ≈ the content-column measure, so the lede
+                            reads as a block of the same width */
+    }
+
+    /* Portrait — a clean rectangle, not a round avatar: it reads as a
+       placed photograph, in keeping with the printed-document register.
+       Its near-white background blends into the paper. */
+    .cv-photo {
+      flex: 0 0 auto;
+      width: 140px;          /* sized so the 4:5 height (≈175px) reaches
+                                down to the bottom of the intro block */
+      aspect-ratio: 4 / 5;   /* squarer than the source 3:4 — cover then
+                                crops the excess ceiling and shirt */
+      object-fit: cover;
+      object-position: center 30%;  /* favour the face over the collar */
+    }
+
+    /* Two-column grid: narrow label margin, content body.
+       Every label and every content block aligns to one of two left
+       edges — nothing is positioned by hand. */
+    .cv-grid {
+      display: grid;
+      grid-template-columns: var(--label-col) 1fr;
+      column-gap: var(--col-gap);
+      row-gap: var(--row-gap);
+    }
+
+    .cv-label {
+      font-size: var(--text-detail);
+      font-weight: var(--weight-regular);
+      line-height: var(--line-height-text);
+      letter-spacing: var(--letter-spacing-text);
+      color: var(--color-quiet);
+      padding-top: 3px;  /* optical: drop label onto the first content line */
+    }
+
+    /* Role: title line + description, grouped tight; roles within a
+       section separated by --role-gap (less than the between-section gap,
+       so the grouping reads). */
+    .cv-role + .cv-role {
+      margin-top: var(--role-gap);
+    }
+
+    .cv-role .body-text {
+      margin-top: var(--title-gap);
+    }
+
+    .cv-footer {
+      margin-top: auto;
+      padding-top: var(--row-gap);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    @media print {
+      body { background: none; padding: 0; }
+      @page { size: A4; margin: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <div class="cv-masthead">
+      <div class="cv-intro">
+        <h1 class="display-title cv-name">Angelo Stifani</h1>
+        <p class="body-text cv-lede">
+          Disponible immédiatement<br>
+          Temps partiel, lundi au jeudi.<br>
+          Flexible le reste de la semaine.<br>
+          Horaires le soir ou de nuit possibles<br>
+          Permis B, véhicule personnelle.
+        </p>
+      </div>
+      <img class="cv-photo" src="cv-pfp.jpeg" alt="Angelo Stifani">
+    </div>
+
+    <div class="cv-grid">
+
+      <div class="cv-label">Expérience</div>
+      <div>
+        <div class="cv-role">
+          <p class="body-text-medium">Cuisinier, traiteur et chef à domicile</p>
+          <p class="body-text">
+            Préparation, achats et approvisionnement,<br>normes d'hygiène HACCP.<br>
+            2024-2026
+          </p>
+        </div>
+
+        <div class="cv-role">
+          <p class="body-text-medium">Commis de cuisine, Onakaya à Nice</b></p>
+          <p class="body-text">
+            Mise en place, préparation, service en équipe.<br>
+            2023
+          </p>
+        </div>
+      </div>
+
+      <div class="cv-label">Formation</div>
+      <p class="body-text-medium">Bac S<br>Licence de droit</p>
+
+      <div class="cv-label">Compétences</div>
+      <p class="body-text">
+        Hygiène et HACCP<br>
+        Propreté du poste<br>
+        Rythme de service<br>
+        Polyvalence et adaptabilité<br>
+        Fiabilité
+      </p>
+
+      <div class="cv-label">Langues</div>
+      <p class="body-text">
+        Français<br>
+        Anglais<br>
+        Espagnol
+      </p>
+
+    </div>
+
+    <div class="cv-footer">
+      <div class="footer-col">
+        <span class="detail-text">15 rue Plan du Four, 34160 Castries</span>
+        <span class="detail-text">Né le 2 août 2001 à Montpellier</span>
+      </div>
+      <div class="footer-col footer-col--right">
+        <span class="detail-text">07 68 94 31 95</span>
+        <span class="detail-text">angelostif@hotmail.fr</span>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

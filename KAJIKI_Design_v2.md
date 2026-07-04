@@ -8,24 +8,13 @@
 
 ## Launching a new Série
 
-**Create the Airtable record before launching.** The Make scenario looks it up by `series_name` from Stripe metadata — if the record doesn't exist when payments come in, the Make scenario errors visibly (no silent data loss). The site doesn't enforce the Airtable record's existence — the discipline is documented here and the safety net is Make's error reporting.
+**Create the Airtable record before launching.** The Make scenario looks it up by `series_name` from Stripe metadata — if the record doesn't exist when payments come in, the Make scenario errors visibly (no silent data loss). As a front-line guard, `serie.js` consults `/api/serie-status` on load and locks the PRÉCOMMANDER button whenever the record is missing, so a série launched without its Airtable record shows as closed rather than taking orders it can't log — the customer never sees an error. The check **fails open**: if it can't reach Airtable, preorders stay available and Make's error reporting remains the backstop.
 
-Order of operations:
+A série is always live on the site — there is no dormant/off state. The lifecycle is continuous: while one série's pickup is underway, launching the next one simply overwrites `data/serie.json`. Preorders open the moment `serie.json` describes a série with a future deadline, and close automatically once that deadline passes.
 
-1. **Create the Airtable record** for the new série.
-2. **Edit `data/serie.json`.** Single source of truth for live state. Update:
-   - `series.name`, `series.dates`, `series.preorder_deadline` (display string)
-   - `series.preorder_deadline_iso` — ISO 8601 with timezone (`2026-05-22T23:59:59+02:00`). This is the enforced cutoff
-   - `series.price_per_unit_cents` (Stripe expects cents)
-   - `series.max_total_quantity` (inventory cap — see Safeguards)
-   - `pickup.days[]` — each day's `full_label` and `window`
-3. **Flip `active: true`** in `data/serie.json`.
+**The step-by-step lives in the operations manual, not here.** See `KAJIKI_Operations.md` → *Launch a new série* for the exact fields, the Airtable step, and who-does-what. In short: create the Airtable record, prepend the finished série to `data/archive.json`, edit `data/serie.json` (the single source of truth for live state), push.
 
-To go dormant after a series:
-1. In `data/serie.json` set `active: false`, update `series.name` to the next series.
-2. In `data/archive.json` prepend the completed entry.
-
-The deadline auto-flips dormant when reached — no manual intervention needed at the cutoff moment. Both API and front-end honor this. Inventory also auto-closes orders once `max_total_quantity` is reached.
+The deadline auto-closes preorders when reached — no manual intervention needed at the cutoff moment. Both API and front-end honor this: the série stays visible, the PRÉCOMMANDER button locks, payment is hidden. Inventory also auto-closes orders once `max_total_quantity` is reached.
 
 ---
 
@@ -65,7 +54,7 @@ The split exists so the live operational payload (`serie.json`) stays small and 
 
 **Footer.** Rendered by `footer.js` into `#site-footer` at the bottom of the last screen on any page. Two columns — left for admin/info links, right for brand/external links — but the exact links in each column are not fixed by this doc. Footer links are quiet links; `aria-current="page"` marks the current page link at full opacity.
 
-**Dormant state.** When no Série is active, `serie.js` adds `body.is-dormant`. Specific screens are hidden via the `body.is-dormant` selector in CSS. The archive screen remains visible. The dormant state is a designed state, not the absence of one.
+**Closed state.** A série is always visible. Once the preorder deadline has passed, `serie.js` adds `body.is-closed`: the série stays on screen, the payment screen is hidden, and the PRÉCOMMANDER button locks (`.is-disabled`). Preorders reopen when `serie.json` is updated to the next série. There is no dormant/off state.
 
 ---
 
@@ -73,7 +62,7 @@ The split exists so the live operational payload (`serie.json`) stays small and 
 
 **Buttons.** `.button` (element) and `.button-link` (`<a>` acting as button). Same appearance: black background, white text, uppercase. `--full` modifier spans available width. One hover state (opacity only). No per-instance variations.
 
-**Fields.** `.field` — transparent background, single-pixel bottom border (underline), no horizontal padding, muted placeholder. Hover and focus increase underline opacity, matching the quiet-link convention. `.field--button-height` aligns a field to button height when used in a `control-row`.
+**Fields.** `.field` — transparent background, single-pixel bottom border (underline), no horizontal padding, muted placeholder. Hover and focus increase underline opacity, matching the quiet-link convention.
 
 **Custom select.** `.select` wraps a `.select-trigger` (extends `.field`) and a `.select-menu`. State is managed via `data-open` on `.select`. The selected option carries `aria-selected="true"`. Changes fire a `select:change` custom event — JS consumers listen to this, not to change on the trigger. Menu opens upward (`bottom: 100%`). Option click handling uses event delegation on `.select-menu` — options can be added dynamically (e.g. day options built by `serie.js`) and still work without re-init.
 
@@ -100,8 +89,6 @@ If Stripe.js fails to load (CDN blocked/down) or the publishable key is missing,
 The card row (`.payment-card-unified`) is a compound field: one `.field` bottom border shared by three Stripe elements (number / expiry / CVC). Reads as one field with three slots.
 
 **Arrow nav.** `.arrow-nav` — two arrow buttons flanking a centered label, using a three-column grid. At the limits of a set, the endpoint button carries `.is-disabled`. Used in the archive screen.
-
-**Notifications form.** Email input (narrower, `--notification-field`) + submit button in a `.control-row`. May include a consent checkbox and `.notifications-status` for feedback text. Submits asynchronously; on success the form dims, on error the status text updates. No full-page reload.
 
 **Image frame.** `.single-image-frame-portrait` — 4:5 portrait aspect ratio. Content swap (new `src`) only; no layout change needed.
 
@@ -142,9 +129,9 @@ All values that repeat or scale are tokens in `:root`. The `@media (min-width: 8
 
 **Is-disabled.** `.is-disabled` on interactive elements (arrow nav at range limit, button-links that can't be used). Same opacity + pointer-events off.
 
-**Dormant.** `body.is-dormant` — set by `serie.js` when `serie.json`'s `active` is `false` OR when `now >= preorder_deadline_iso`. CSS hides inactive screens. Designed state.
+**Closed.** `body.is-closed` — set by `serie.js` when `now >= preorder_deadline_iso`, or when `/api/serie-status` reports the série isn't orderable yet (its Airtable record is missing). The série stays visible; CSS hides the payment screen (`#payment`) and the PRÉCOMMANDER button receives `.is-disabled`.
 
-The deadline auto-flip means setting `active: true` with a past deadline is a no-op (effectively still dormant). The `preorder_deadline_iso` is the source of truth for cutoff; the human-readable `preorder_deadline` string is for display only — never used in logic.
+The `preorder_deadline_iso` is the single source of truth for the cutoff; the human-readable `preorder_deadline` string is for display only — never used in logic.
 
 **Payment open.** `#payment.is-open` — the screen becomes visible. Managed entirely by `payment.js`.
 
@@ -159,7 +146,7 @@ The deadline auto-flip means setting `active: true` with a past deadline is a no
 Every order pathway has a defended boundary. The API (`api/create-payment-intent.js`) refuses requests that:
 
 - Come from an unlisted origin (basic spam protection — see `ALLOWED_ORIGINS`)
-- Hit while `active: false` or past `preorder_deadline_iso` (deadline is enforced server-side, not just decorative)
+- Hit while past `preorder_deadline_iso` (deadline is enforced server-side, not just decorative)
 - Have a malformed email (basic regex check)
 - Have invalid quantity (`> max_quantity_per_order`) or invalid pickup_day
 - Would exceed `max_total_quantity` (inventory cap — see below)
@@ -173,7 +160,7 @@ Price is always computed server-side from `serie.json` — the client cannot inf
 
 **Known limitations:**
 - **Rate limiting.** Vercel serverless has no built-in request throttling. The Origin check blocks naive curl spam but won't stop a determined attacker. Real protection requires Upstash Redis (or similar) — track as future infrastructure work. Stripe's own rate limits provide a final backstop.
-- **Airtable record existence.** Not enforced by code. Documented discipline: create the Airtable record before flipping `active: true`. If forgotten, the Make scenario will error visibly when it can't find the record — no silent data loss, but the customer's order won't be logged until the record is created and the Make run is retried.
+- **Airtable record existence.** The front-end locks preorders when the record is missing (`/api/serie-status`, see "Launching a new Série"), so a normal customer never reaches the form. This is a UX gate, not a hard server guard — it fails open, and a direct or race-window request could still create a PaymentIntent. Such a slip-through is caught by Make's visible error: the customer is charged and the order is recoverable from Stripe metadata, but won't be auto-logged until the record is created and the Make run retried. Requires four Vercel env vars (`AIRTABLE_TOKEN`, `AIRTABLE_BASE_ID`, `AIRTABLE_SERIES_TABLE`, `AIRTABLE_SERIES_NAME_FIELD`); with any unset, the gate is skipped and behaviour falls back to deadline-only.
 
 ---
 
@@ -191,8 +178,8 @@ Price is always computed server-side from `serie.json` — the client cannot inf
 
 **Naming conventions.**
 - Component classes: `block`, `block-element`, `block--modifier` (BEM-lite).
-- Utility classes: single-level, descriptive (`.quiet-link`, `.text-link`, `.control-row`, `.text-block`).
-- State classes: `is-` prefix (`.is-open`, `.is-disabled`, `.is-dormant`, `.is-submitted`).
+- Utility classes: single-level, descriptive (`.quiet-link`, `.text-link`, `.text-block`).
+- State classes: `is-` prefix (`.is-open`, `.is-disabled`, `.is-closed`, `.is-submitted`).
 - JS hooks: `data-*` attributes (`[data-payment-quantity]`, `[data-serie-number]`). Style via classes only; `data-*` attributes are for JS, not CSS selectors. Exception: `data-serie-*` hooks double as CSS selectors for the loading-state opacity rule, because the hook and the visibility are the same concern.
 
 **Data attributes vs. classes.** JS reads and writes `data-*` attributes for hooks and state it controls. CSS uses classes for visual state. The two roles don't mix (see the loading-state exception above).

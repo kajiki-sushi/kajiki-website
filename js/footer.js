@@ -11,8 +11,7 @@ function getFooterContext() {
     isAllergens:   currentPage === "allergenes",
     isCancellations: currentPage === "annulations",
     isPrivacy:     currentPage === "confidentialite",
-    isContact:     currentPage === "contact",
-    isRetrait:     currentPage === "retrait"
+    isContact:     currentPage === "contact"
   };
 }
 
@@ -25,15 +24,9 @@ function buildFooter() {
 
   const leftLinks = [
     buildFooterLink({ href: `${ctx.base}contact`,                  label: "Contact",          isActive: ctx.isContact }),
-    buildFooterLink({ href: `${ctx.base}retrait`,                  label: "Retraits",          isActive: ctx.isRetrait }),
     buildFooterLink({ href: `${ctx.base}allergenes`,               label: "Allergènes",      isActive: ctx.isAllergens }),
     buildFooterLink({ href: `${ctx.base}annulations`,              label: "Annulations",     isActive: ctx.isCancellations }),
     buildFooterLink({ href: `${ctx.base}confidentialite`, label: "Confidentialité", isActive: ctx.isPrivacy })
-  ].join("");
-
-  const rightLinks = [
-    buildFooterLink({ href: "https://www.instagram.com/sushi.kajiki/", label: "Instagram",        isExternal: true }),
-    buildFooterLink({ href: `${ctx.base}series-suivantes`,        label: "Séries suivantes" })
   ].join("");
 
   return `
@@ -42,9 +35,13 @@ function buildFooter() {
         ${leftLinks}
       </div>
       <div class="footer-col footer-col--right">
-        <div class="footer-links-right">
-          ${rightLinks}
-        </div>
+        <a href="https://www.instagram.com/sushi.kajiki/" class="footer-social-link quiet-link" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="2.5" y="2.5" width="19" height="19" rx="5.5"></rect>
+            <circle cx="12" cy="12" r="4.8"></circle>
+            <circle cx="17.4" cy="6.6" r="0.9"></circle>
+          </svg>
+        </a>
       </div>
     </div>
   `;

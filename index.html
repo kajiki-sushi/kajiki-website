@@ -57,36 +57,33 @@
         <div class="single-image-frame-portrait">
           <img src="assets/images/samples-3.jpg" alt="Composition de la série en cours">
         </div>
-        <p class="body-text">
-          Composée de sushi, futomaki et uramaki
-        </p>
       </div>
     </section>
 
-    <section id="serie" class="screen">
+    <section id="composition" class="screen">
       <div class="page-content">
 
-        <h2 class="display-title" data-serie-number></h2>
-
-        <div class="specsheet--design">
+        <div class="specsheet--admin">
           <div class="specsheet-row">
-            <span class="specsheet-label">Dates</span>
-            <span class="specsheet-value" data-serie-dates></span>
+            <div class="specsheet-label">Contenu</div>
+            <div class="specsheet-divider" aria-hidden="true"></div>
+            <div class="specsheet-value">Sushi, futomaki & maki</div>
           </div>
           <div class="specsheet-row">
-            <span class="specsheet-label">Plateau</span>
-            <span class="specsheet-value">2 pers.</span>
+            <div class="specsheet-label">Pièces</div>
+            <div class="specsheet-divider" aria-hidden="true"></div>
+            <div class="specsheet-value">16</div>
           </div>
           <div class="specsheet-row">
-            <span class="specsheet-label">Prix</span>
-            <span class="specsheet-value" data-serie-price></span>
+            <div class="specsheet-label">Net</div>
+            <div class="specsheet-divider" aria-hidden="true"></div>
+            <div class="specsheet-value">~500 g</div>
           </div>
         </div>
-        
-        <p class="body-text">
-          Précommande jusqu'au <span data-serie-deadline></span>.<br>Pêche après clôture.
-        </p>
 
+        <p class="body-text">
+          Avec gingembre, sauce soja et wasabi.<br>Produits par KAJIKI®.
+        </p>
 
       </div>
     </section>
@@ -102,21 +99,21 @@
     <section id="retrait" class="screen">
       <div class="page-content">
 
-        <h2 class="display-title">Retrait</h2>
+        <h2 class="display-title" data-serie-number></h2>
 
         <div class="specsheet-action-group">
           <div class="specsheet--design">
             <div class="specsheet-row">
-              <span class="specsheet-label">Lieu</span>
-              <a data-serie-location href="#" class="specsheet-value text-link" target="_blank" rel="noopener"></a>
+              <span class="specsheet-label">Clôture</span>
+              <span class="specsheet-value" data-serie-deadline></span>
             </div>
             <div class="specsheet-row">
-              <span class="specsheet-label">Horaire</span>
-              <span class="specsheet-value" data-serie-hours></span>
+              <span class="specsheet-label">Pêche</span>
+              <span class="specsheet-value">Après clôture</span>
             </div>
           </div>
           <a href="#payment" class="button-link button-link--full">PRÉCOMMANDER</a>
-          <p class="body-text"><a href="pages/retrait" class="text-link">Détails de retrait</a></p>
+          <p class="body-text"><a href="pages/retrait" class="text-link">Retrait à Montpellier</a></p>
         </div>
 
       </div>
@@ -222,8 +219,7 @@
 
   <script src="js/footer.js?v=10"></script>
   <script src="js/navigation.js?v=10"></script>
-  <script src="js/notifications.js?v=10"></script>
-  <script src="js/serie.js?v=4"></script>
+  <script src="js/serie.js?v=5"></script>
   <script src="js/select.js?v=11"></script>
   <script src="js/payment.js?v=12"></script>
   <script src="js/stripe.js?v=11"></script>
