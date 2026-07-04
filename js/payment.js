@@ -70,7 +70,7 @@
     const label   = getDayFullLabel().toLowerCase();
     const window  = getDayWindow();
     const tail    = window ? ', entre ' + window : '';
-    detailEl.innerHTML = qty + ' ' + plateau + ' pour 2 personnes.<br>À retirer le ' + label + tail + '.';
+    detailEl.innerHTML = qty + ' ' + plateau + '.<br>À retirer le ' + label + tail + '.';
   }
 
   quantityEl.addEventListener("select:change", renderTotal);

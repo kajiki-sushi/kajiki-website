@@ -132,12 +132,11 @@ function renderArchive(data) {
   var current = 0;
 
   function entryHTML(entry) {
-    var cell_2_node = entry.cell_2_url
-      ? '<a href="' + entry.cell_2_url + '" class="specsheet-value text-link">' + (entry.cell_2 || '') + '</a>'
-      : '<div class="specsheet-value">' + (entry.cell_2 || '') + '</div>';
+    var metaHTML = [entry.month, entry.city].filter(Boolean).join('<br>');
+    var fishHTML = (entry.fish || []).join('<br>');
     return '<div class="specsheet--archive">'
-      + '<div class="specsheet-value">' + (entry.cell_1 || '') + '</div>'
-      + cell_2_node
+      + '<div class="specsheet-value">' + metaHTML + '</div>'
+      + '<div class="specsheet-value">' + fishHTML + '</div>'
       + '</div>';
   }
 
