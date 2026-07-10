@@ -34,7 +34,7 @@ Operational state lives in JSON, not in HTML or JS. `index.html` carries only st
 
 **`data/serie.json`** — live state. Fields are grouped by visibility frequency: things you edit every série at top of each block, stable things at bottom. Loaded by `serie.js`, populated into the DOM via `data-serie-*` hooks. Used server-side too by `api/create-payment-intent.js` for amount calculation and Stripe metadata.
 
-**`data/archive.json`** — append-only history, newest entry first. Each entry: `header` (big numeral above), `city` (location string, e.g. `"Montpellier"`), `month` (display string, e.g. `"Juillet 2026"`), `fish` (array of fish names, stacked as one line each). Each field renders as its own stacked value block, with borders between them that `.specsheet--archive` always draws.
+**`data/archive.json`** — append-only history, newest entry first. Each entry: `header` (big numeral, shown large above), `fish` (array of fish names, stacked one per line), `month` (display string, e.g. `"Juillet 2026"`). `fish` and `month` render as two stacked cells inside `.specsheet--archive` — fish on top, the month as a bottom label cell separated by a border.
 
 Both files are served with `Cache-Control: no-store` (set in `vercel.json`) — updates show immediately, no stale browser caches.
 

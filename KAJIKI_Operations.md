@@ -85,9 +85,9 @@ Claude handles the fiddly, easy-to-forget bits for you (cents conversion, cache-
 - **You:** `git push`.
 
 ### ▸ Update the archive
-*Ask: "Add Série 02 to the archive — Montpellier, Juin 2026, Thon Rouge / Crevette Rose / Maquereau."*
+*Ask: "Add Série 02 to the archive — Juin 2026, Thon Rouge / Crevette Rose / Maquereau."*
 
-- **Claude, in `archive.json`:** prepend an entry (newest first) — `header` (the big numeral, e.g. `"03"`), `city` (pickup location, e.g. `"Montpellier"`), `month` (e.g. `"Juillet 2026"`), `fish` (array of fish names, stacked one per line, e.g. `["Thon Rouge", "Sériole"]`).
+- **Claude, in `archive.json`:** prepend an entry (newest first) — `header` (the big numeral, e.g. `"03"`), `month` (e.g. `"Juillet 2026"`), `fish` (array of fish names, stacked one per line, e.g. `["Thon Rouge", "Sériole"]`).
 - **You:** `git push`.
 
 ### ▸ Swap product photos

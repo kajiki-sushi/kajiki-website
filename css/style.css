@@ -574,39 +574,44 @@ body.is-closed #payment {
 
 /* Archive specsheet */
 
-#archive .page-content {
-  max-width: 700px;
-}
-
-@media (min-width: 800px) {
-  #archive .page-content {
-    max-width: 1000px;
-  }
-}
-
 .specsheet--archive {
   border-left: 1px solid var(--color-border);
   text-align: left;
-  width: 100%;
+  width: fit-content;   /* hug border + text by default; the border between the two
+                           cells makes the box width visible, so a min-width floor
+                           reads as balanced. max-width only caps — min-width widens. */
+  min-width: 160px;     /* FLAG: hardcoded — floor that widens past the hugged text */
+  max-width: 100%;
+  margin-inline: auto;
+}
+
+@media (min-width: 800px) {
+  .specsheet--archive {
+    min-width: 200px;
+  }
 }
 
 .specsheet--archive .specsheet-value {
-  padding: var(--cell-padding);
+  padding: var(--cell-padding); /* match the classic specsheets */
+  line-height: 1.4;             /* tighter than --line-height-text (1.6): this is the
+                                   only multi-line specsheet, so the leading between
+                                   stacked fish lines reads as excess vertical padding */
   text-align: left;
   display: block;
 }
 
 .specsheet--archive .specsheet-value + .specsheet-value {
   border-top: 1px solid var(--color-border);
+  padding-top: 18px;   /* a touch more breathing room below the rule (+4–6px) */
 }
 
 #archive-content {
-  min-height: 160px; /* sized to 3-fish max so arrows don't shift when navigating */
+  min-height: 112px; /* snug to a 3-fish cell + date row so arrows don't shift when navigating */
 }
 
 @media (min-width: 800px) {
   #archive-content {
-    min-height: 195px;
+    min-height: 134px;
   }
 }
 
@@ -779,8 +784,8 @@ body.is-closed #payment {
 }
 
 #archive .arrow-nav-btn {
-  width: 11px;
-  height: 19px;
+  width: 13px;
+  height: 23px;
 }
 
 @media (min-width: 800px) {
@@ -789,8 +794,8 @@ body.is-closed #payment {
   }
 
   #archive .arrow-nav-btn {
-    width: 14px;
-    height: 23px;
+    width: 17px;
+    height: 28px;
   }
 }
 

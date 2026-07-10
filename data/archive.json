@@ -2,13 +2,11 @@
   {
     "header": "02",
     "month": "Juin 2026",
-    "city": "Montpellier",
     "fish": ["Thon Rouge", "Crevette Rose", "Maquereau"]
   },
   {
     "header": "01",
     "month": "Avril 2026",
-    "city": "Vauvert",
     "fish": ["Thon Rouge"]
   }
 ]

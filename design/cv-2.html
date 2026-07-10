@@ -8,12 +8,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=block" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <style>
-    /* Fixed A4 canvas. Structure is carried by a quiet left-margin label
-       column — same label/value logic as .specsheet--admin (label left,
-       value right). The content column then needs only two registers:
-         titles  — body-text-medium (14px / 500)  → the diploma + job titles
-         body    — body-text (12.5px / 200)        → intro, descriptions, lists
-       Spacing encodes grouping: 16px within a section, 32px between them. */
+    /* Fixed A4 canvas — shares the design system of cv.html: a quiet
+       left-margin label column (à la .specsheet--admin) and two content
+       registers, body-text-medium (titles) and body-text (everything
+       else). Each role carries a right-aligned year and a task list. */
 
     :root {
       --text-display: 42px;
@@ -24,7 +22,7 @@
 
       --label-col: 130px;
       --col-gap: 28px;
-      --row-gap: 38.4px;   /* section gap ×1.2 */
+      --row-gap: 38.4px;
       --role-gap: 16px;
       --title-gap: 8px;
     }
@@ -63,27 +61,21 @@
     }
 
     .cv-lede {
-      max-width: 470px;  /* ≈ the content-column measure, so the lede
-                            reads as a block of the same width */
+      max-width: 470px;
     }
 
-    /* Portrait — a clean rectangle, not a round avatar: it reads as a
-       placed photograph, in keeping with the printed-document register.
-       Its near-white background blends into the paper. */
+    /* Portrait — a clean rectangle, not a round avatar. Sized so its 4:5
+       height (≈140px) reaches the bottom of this CV's three-line intro. */
     .cv-photo {
       flex: 0 0 auto;
-      width: 140px;          /* sized so the 4:5 height (≈175px) reaches
-                                down to the bottom of the intro block */
-      aspect-ratio: 4 / 5;   /* squarer than the source 3:4 — cover then
-                                crops the excess ceiling and shirt */
+      width: 112px;
+      aspect-ratio: 4 / 5;
       object-fit: cover;
       object-position: center 30%;  /* favour the face over the collar */
       filter: brightness(1.05);     /* +5% brightness */
     }
 
-    /* Two-column grid: narrow label margin, content body.
-       Every label and every content block aligns to one of two left
-       edges — nothing is positioned by hand. */
+    /* Two-column grid: narrow label margin, content body. */
     .cv-grid {
       display: grid;
       grid-template-columns: var(--label-col) 1fr;
@@ -96,15 +88,28 @@
       font-weight: var(--weight-regular);
       line-height: var(--line-height-text);
       letter-spacing: var(--letter-spacing-text);
-      color: var(--color-quiet);
       padding-top: 3px;  /* optical: drop label onto the first content line */
     }
 
-    /* Role: title line + description, grouped tight; roles within a
-       section separated by --role-gap (less than the between-section gap,
-       so the grouping reads). */
+    /* Role: title + year on one line, an optional quiet venue note, then
+       the task list. Roles within a section separated by --role-gap. */
     .cv-role + .cv-role {
       margin-top: var(--role-gap);
+    }
+
+    .cv-role-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: var(--col-gap);
+    }
+
+    .cv-role-year {
+      white-space: nowrap;
+    }
+
+    .cv-role-sub {
+      margin-top: 2px;
     }
 
     .cv-role .body-text {
@@ -133,9 +138,8 @@
         <h1 class="display-title cv-name">Angelo Stifani</h1>
         <p class="body-text cv-lede">
           Disponible immédiatement<br>
-          Temps partiel, flexible.<br>
-          Horaires le soir ou de nuit possibles<br>
-          Permis B, véhicule personnelle.
+          Temps partiel, flexible<br>
+          Permis B, véhicule personnel
         </p>
       </div>
       <img class="cv-photo" src="cv-pfp.jpeg" alt="Angelo Stifani">
@@ -146,18 +150,30 @@
       <div class="cv-label">Expérience</div>
       <div>
         <div class="cv-role">
-          <p class="body-text-medium">Cuisinier, traiteur et chef à domicile</p>
+          <div class="cv-role-head">
+            <p class="body-text-medium">KAJIKI · Chef sushi à domicile</p>
+            <span class="body-text cv-role-year">2024–2026</span>
+          </div>
           <p class="body-text">
-            Préparation, achats et approvisionnement,<br>normes d'hygiène HACCP.<br>
-            2024-2026
+            Organisation d'événements, notamment à L'Élytre (Montpellier)<br>
+            Préparation et dressage de sushi<br>
+            Service omakase au comptoir<br>
+            Achats et approvisionnement<br>
+            Normes HACCP
           </p>
         </div>
 
         <div class="cv-role">
-          <p class="body-text-medium">Commis de cuisine, Onakaya à Nice</b></p>
+          <div class="cv-role-head">
+            <p class="body-text-medium">Onakaya · Commis de cuisine</p>
+            <span class="body-text cv-role-year">2023</span>
+          </div>
+          <p class="detail-text cv-role-sub">Restaurant japonais, cuisine ouverte (Nice)</p>
           <p class="body-text">
-            Mise en place, préparation, service en équipe.<br>
-            2023
+            Mise en place<br>
+            Préparation<br>
+            Nettoyage et propreté<br>
+            Service en équipe
           </p>
         </div>
       </div>
@@ -167,10 +183,10 @@
 
       <div class="cv-label">Compétences</div>
       <p class="body-text">
-        Hygiène et HACCP<br>
-        Propreté du poste<br>
-        Rythme de service<br>
-        Polyvalence et adaptabilité<br>
+        Normes HACCP<br>
+        Préparation alimentaire<br>
+        Travail en équipe<br>
+        Organisation<br>
         Fiabilité
       </p>
 
