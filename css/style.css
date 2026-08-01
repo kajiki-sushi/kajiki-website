@@ -591,6 +591,7 @@ body.is-closed #payment {
   }
 }
 
+.specsheet--archive .specsheet-label,
 .specsheet--archive .specsheet-value {
   padding: var(--cell-padding); /* match the classic specsheets */
   line-height: 1.4;             /* tighter than --line-height-text (1.6): this is the
@@ -600,7 +601,7 @@ body.is-closed #payment {
   display: block;
 }
 
-.specsheet--archive .specsheet-value + .specsheet-value {
+.specsheet--archive .specsheet-label + .specsheet-value {
   border-top: 1px solid var(--color-border);
   padding-top: 18px;   /* a touch more breathing room below the rule (+4–6px) */
 }

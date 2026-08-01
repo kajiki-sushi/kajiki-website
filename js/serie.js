@@ -133,7 +133,7 @@ function renderArchive(data) {
 
   function entryHTML(entry) {
     return '<div class="specsheet--archive">'
-      + '<div class="specsheet-value">' + (entry.month || '') + '</div>'
+      + '<div class="specsheet-label">' + (entry.month || '') + '</div>'
       + '<div class="specsheet-value">' + (entry.fish || []).join('<br>') + '</div>'
       + '</div>';
   }
