@@ -132,9 +132,15 @@ function renderArchive(data) {
   var current = 0;
 
   function entryHTML(entry) {
-    return '<div class="specsheet--archive">'
-      + '<div class="specsheet-label">' + (entry.month || '') + '</div>'
-      + '<div class="specsheet-value">' + (entry.fish || []).join('<br>') + '</div>'
+    return '<div class="archive-entry">'
+      + '<div class="archive-block">'
+      + '<div class="archive-heading">Série ' + (entry.header || '') + '</div>'
+      + '<div class="archive-detail">' + (entry.month || '') + '</div>'
+      + '</div>'
+      + '<div class="archive-block">'
+      + '<div class="archive-heading">Composition</div>'
+      + '<div class="archive-detail">' + (entry.fish || []).join('<br>') + '</div>'
+      + '</div>'
       + '</div>';
   }
 
@@ -146,11 +152,9 @@ function renderArchive(data) {
 
   function draw(index) {
     var entry   = displayData[index];
-    var numero  = document.getElementById('archive-numero');
     var content = document.getElementById('archive-content');
     var prev    = document.querySelector('[data-archive="prev"]');
     var next    = document.querySelector('[data-archive="next"]');
-    if (numero)  numero.textContent = entry.header || '';
     if (content) content.innerHTML  = entryHTML(entry);
     if (prev)    setDisabled(prev, index >= displayData.length - 1);
     if (next)    setDisabled(next, index <= 0);

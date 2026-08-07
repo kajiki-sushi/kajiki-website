@@ -572,47 +572,48 @@ body.is-closed #payment {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Archive specsheet */
+/* Archive entry
+   No frame, no cells — a centered type block that the arrows flank.
+   Hierarchy comes from weight and color alone: headings hold the line,
+   details recede into quiet grey. */
 
-.specsheet--archive {
-  border-left: 1px solid var(--color-border);
-  text-align: left;
-  width: fit-content;   /* hug border + text by default; the border between the two
-                           cells makes the box width visible, so a min-width floor
-                           reads as balanced. max-width only caps — min-width widens. */
-  min-width: 160px;     /* FLAG: hardcoded — floor that widens past the hugged text */
-  max-width: 100%;
-  margin-inline: auto;
+.archive-entry {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--text-gap);
+  text-align: center;
 }
 
-@media (min-width: 800px) {
-  .specsheet--archive {
-    min-width: 200px;
-  }
+.archive-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.specsheet--archive .specsheet-label,
-.specsheet--archive .specsheet-value {
-  padding: var(--cell-padding); /* match the classic specsheets */
-  line-height: 1.4;             /* tighter than --line-height-text (1.6): this is the
-                                   only multi-line specsheet, so the leading between
-                                   stacked fish lines reads as excess vertical padding */
-  text-align: left;
-  display: block;
+.archive-heading,
+.archive-detail {
+  font-size: var(--text-body);
+  line-height: var(--line-height-text);
+  letter-spacing: var(--letter-spacing-text);
 }
 
-.specsheet--archive .specsheet-label + .specsheet-value {
-  border-top: 1px solid var(--color-border);
-  padding-top: 18px;   /* a touch more breathing room below the rule (+4–6px) */
+.archive-heading {
+  font-weight: var(--weight-medium);
+}
+
+.archive-detail {
+  font-weight: var(--weight-light);
+  color: var(--color-quiet);
 }
 
 #archive-content {
-  min-height: 112px; /* snug to a 3-fish cell + date row so arrows don't shift when navigating */
+  min-height: 112px; /* snug to a 3-fish entry so arrows don't shift when navigating */
 }
 
 @media (min-width: 800px) {
   #archive-content {
-    min-height: 134px;
+    min-height: 140px;
   }
 }
 
@@ -780,8 +781,9 @@ body.is-closed #payment {
 }
 
 #archive .arrow-nav {
-  margin-top: -8px;
-  column-gap: calc(var(--arrow-gap) * 0.5);
+  /* Wider than the default: the arrows now flank a whole type block,
+     not a single number, so they need room to read as separate. */
+  column-gap: calc(var(--arrow-gap) * 2.5);
 }
 
 #archive .arrow-nav-btn {
@@ -790,10 +792,6 @@ body.is-closed #payment {
 }
 
 @media (min-width: 800px) {
-  #archive .arrow-nav {
-    margin-top: -10px;
-  }
-
   #archive .arrow-nav-btn {
     width: 17px;
     height: 28px;
