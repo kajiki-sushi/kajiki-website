@@ -134,12 +134,12 @@ function renderArchive(data) {
   function entryHTML(entry) {
     return '<div class="archive-entry">'
       + '<div class="archive-block">'
-      + '<div class="archive-heading">Série ' + (entry.header || '') + '</div>'
-      + '<div class="archive-detail">' + (entry.month || '') + '</div>'
+      + '<div class="specsheet-label">Série ' + (entry.header || '') + '</div>'
+      + '<div class="specsheet-value">' + (entry.month || '') + '</div>'
       + '</div>'
       + '<div class="archive-block">'
-      + '<div class="archive-heading">Composition</div>'
-      + '<div class="archive-detail">' + (entry.fish || []).join('<br>') + '</div>'
+      + '<div class="specsheet-label">Composition</div>'
+      + '<div class="specsheet-value">' + (entry.fish || []).join('<br>') + '</div>'
       + '</div>'
       + '</div>';
   }

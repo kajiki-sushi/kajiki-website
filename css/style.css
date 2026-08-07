@@ -574,8 +574,9 @@ body.is-closed #payment {
 
 /* Archive entry
    No frame, no cells — a centered type block that the arrows flank.
-   Hierarchy comes from weight and color alone: headings hold the line,
-   details recede into quiet grey. */
+   Layout only: the type comes from the base .specsheet-label /
+   .specsheet-value pair, used without a --design/--admin variant so
+   the label/value weight contrast carries the hierarchy unframed. */
 
 .archive-entry {
   display: flex;
@@ -589,22 +590,6 @@ body.is-closed #payment {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.archive-heading,
-.archive-detail {
-  font-size: var(--text-body);
-  line-height: var(--line-height-text);
-  letter-spacing: var(--letter-spacing-text);
-}
-
-.archive-heading {
-  font-weight: var(--weight-medium);
-}
-
-.archive-detail {
-  font-weight: var(--weight-light);
-  color: var(--color-quiet);
 }
 
 #archive-content {
