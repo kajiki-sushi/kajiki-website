@@ -131,16 +131,19 @@ function renderArchive(data) {
 
   var current = 0;
 
+  // A row omits itself when the série has no data for it, so the
+  // sheet stays flush — no empty label facing a blank column.
+  function row(label, value) {
+    if (!value) return '';
+    return '<div class="specsheet-label">' + label + '</div>'
+      + '<div class="specsheet-value">' + value + '</div>';
+  }
+
   function entryHTML(entry) {
-    return '<div class="archive-entry">'
-      + '<div class="archive-block">'
-      + '<div class="specsheet-label">Série ' + (entry.header || '') + '</div>'
-      + '<div class="specsheet-value">' + (entry.month || '') + '</div>'
-      + '</div>'
-      + '<div class="archive-block">'
-      + '<div class="specsheet-label">Composition</div>'
-      + '<div class="specsheet-value">' + (entry.fish || []).join('<br>') + '</div>'
-      + '</div>'
+    return '<div class="archive-sheet">'
+      + row('Sortie',      entry.month || '')
+      + row('Composition', (entry.fish  || []).join('<br>'))
+      + row('Bateaux',     (entry.boats || []).join('<br>'))
       + '</div>';
   }
 
@@ -152,9 +155,11 @@ function renderArchive(data) {
 
   function draw(index) {
     var entry   = displayData[index];
+    var numero  = document.getElementById('archive-numero');
     var content = document.getElementById('archive-content');
     var prev    = document.querySelector('[data-archive="prev"]');
     var next    = document.querySelector('[data-archive="next"]');
+    if (numero)  numero.textContent = entry.header || '';
     if (content) content.innerHTML  = entryHTML(entry);
     if (prev)    setDisabled(prev, index >= displayData.length - 1);
     if (next)    setDisabled(next, index <= 0);

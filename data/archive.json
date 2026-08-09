@@ -2,7 +2,8 @@
   {
     "header": "02",
     "month": "Juin 2026",
-    "fish": ["Thon Rouge", "Crevette Rose", "Maquereau"]
+    "fish": ["Thon Rouge", "Crevette Rose", "Maquereau"],
+    "boats": ["Nino", "Deux Frères VII"]
   },
   {
     "header": "01",
