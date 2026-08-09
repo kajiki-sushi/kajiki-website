@@ -573,37 +573,27 @@ body.is-closed #payment {
 }
 
 /* Archive sheet
-   The admin specsheet's label/value logic with the gridlines removed.
-   Type comes from the base .specsheet-label / .specsheet-value pair,
-   used without a --design/--admin variant so no frame comes with it.
+   Uses .specsheet--admin as-is — gridlines, 35% split, cell padding.
+   Only two things are archive-specific: the sheet is centred under
+   the série number rather than left-aligned in a text column, and
+   the wrapper reserves a fixed height (below) so the arrows hold
+   still between séries. */
 
-   Columns hug their content (auto auto + fit-content) rather than
-   taking --admin's 35% split: with no rules to hold the two columns
-   together, a wide gap reads as two stray blocks drifting left
-   instead of one centered unit. Rows align to the top so a label
-   sits with the first line of a multi-line value. */
-
-.archive-sheet {
-  display: grid;
-  grid-template-columns: auto auto;
-  align-items: start;
-  column-gap: var(--section-gap);
-  row-gap: var(--text-gap);
-  width: fit-content;
+#archive-content .specsheet--admin {
   margin-inline: auto;
-  text-align: left;
 }
 
 #archive-content {
+  width: 100%;   /* so the specsheet's own % width and max-width resolve */
   /* FLAG: hardcoded — floor matching the tallest entry (3 fish + 2 bateaux)
-     so the centered column doesn't jump as you navigate séries. A future
+     so the centred sheet doesn't jump as you navigate séries. A future
      série with more rows than that will need this raised again. */
-  min-height: 120px;
+  min-height: 170px;
 }
 
 @media (min-width: 800px) {
   #archive-content {
-    min-height: 156px;
+    min-height: 206px;
   }
 }
 

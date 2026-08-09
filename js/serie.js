@@ -135,12 +135,15 @@ function renderArchive(data) {
   // sheet stays flush — no empty label facing a blank column.
   function row(label, value) {
     if (!value) return '';
-    return '<div class="specsheet-label">' + label + '</div>'
-      + '<div class="specsheet-value">' + value + '</div>';
+    return '<div class="specsheet-row">'
+      + '<div class="specsheet-label">' + label + '</div>'
+      + '<div class="specsheet-divider" aria-hidden="true"></div>'
+      + '<div class="specsheet-value">' + value + '</div>'
+      + '</div>';
   }
 
   function entryHTML(entry) {
-    return '<div class="archive-sheet">'
+    return '<div class="specsheet--admin">'
       + row('Sortie',      entry.month || '')
       + row('Composition', (entry.fish  || []).join('<br>'))
       + row('Bateaux',     (entry.boats || []).join('<br>'))
