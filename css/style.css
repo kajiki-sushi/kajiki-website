@@ -549,7 +549,7 @@ body.is-closed #payment {
      sits on a footer page (already inset by its parent) or a screen
      (no parent inset). The *0.85 narrows further below that inset,
      mobile only — at/above 800px the 425px cap always wins. */
-  max-width: min(425px, calc((100vw - 2 * var(--screen-padding)) * 0.9));
+  max-width: min(425px, calc((100vw - 2 * var(--screen-padding)) * 0.85));
 }
 
 .specsheet--admin .specsheet-row {
