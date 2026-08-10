@@ -595,15 +595,18 @@ body.is-closed #payment {
 }
 
 #archive-content {
-  /* FLAG: hardcoded — floor matching the tallest entry (3 fish + 2 bateaux)
-     so the centered column doesn't jump as you navigate séries. A future
-     série with more rows than that will need this raised again. */
-  min-height: 132px;
+  /* FLAG: hardcoded — floor sized to the tallest entry a série is
+     expected to reach (3 fish + 3 bateaux), not to the tallest one
+     currently in archive.json, so publishing a série with a full boat
+     list doesn't shift the number and arrows. Shorter séries sit
+     top-aligned with space beneath. Re-measure only if a série can
+     exceed 3 fish or 3 bateaux. */
+  min-height: 164px;
 }
 
 @media (min-width: 800px) {
   #archive-content {
-    min-height: 174px;
+    min-height: 214px;
   }
 }
 

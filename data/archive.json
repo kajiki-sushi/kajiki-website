@@ -1,7 +1,7 @@
 [
   {
     "header": "02",
-    "month": "Juin 2026",
+    "month": "juin 2026",
     "fish": ["Thon Rouge", "Crevette Rose", "Maquereau"],
     "catch_date": "13 juin",
     "boats": ["Trois Frères II"],
@@ -9,7 +9,7 @@
   },
   {
     "header": "01",
-    "month": "Avril 2026",
+    "month": "avril 2026",
     "fish": ["Thon Rouge"]
   }
 ]
