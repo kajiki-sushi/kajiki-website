@@ -85,10 +85,12 @@ Claude handles the fiddly, easy-to-forget bits for you (cents conversion, cache-
 - **You:** `git push`.
 
 ### ▸ Update the archive
-*Ask: "Add Série 02 to the archive — Juin 2026, Thon Rouge / Crevette Rose / Maquereau."*
+*Ask: "Add Série 03 to the archive — sortie juillet 2026, pêche 4 juillet, bateaux Trois Frères II / Nino, composition Thon Rouge / Sériole."*
 
-- **Claude, in `archive.json`:** prepend an entry (newest first) — `header` (the big numeral, e.g. `"03"`), `month` (e.g. `"Juillet 2026"`), `fish` (array of fish names, stacked one per line, e.g. `["Thon Rouge", "Sériole"]`).
+- **Claude, in `archive.json`:** prepend an entry (newest first) — `number` (the big numeral, e.g. `"03"`), `composition` (array, one fish per line, e.g. `["Thon Rouge", "Sériole"]`), `sortie` (e.g. `"juillet 2026"`), `peche` (e.g. `"4 juillet"`), `bateaux` (array, e.g. `["Trois Frères II", "Nino"]`). Months are lowercase.
 - **You:** `git push`.
+
+Give whichever fields you have. Any field left out simply doesn't render its row, so an older série with less on record is fine — série 01 carries only `number`, `composition` and `sortie`. New field types can be added later without touching the entries already written.
 
 ### ▸ Swap product photos
 *Ask: "Use these two photos for the série."*

@@ -131,8 +131,10 @@ function renderArchive(data) {
 
   var current = 0;
 
-  // A row omits itself when the série has no data for it, so the
-  // sheet stays flush — no empty label facing a blank column.
+  // Fields are named, not positional, and the set is allowed to grow.
+  // A row omits itself when the série has no data for it, so older
+  // séries carrying fewer fields render fewer rows — no empty label
+  // facing a blank column, and no migration when a field is added.
   function row(label, value) {
     if (!value) return '';
     return '<div class="specsheet-label">' + label + '</div>'
@@ -141,10 +143,10 @@ function renderArchive(data) {
 
   function entryHTML(entry) {
     return '<div class="archive-sheet">'
-      + row('Composition', (entry.fish  || []).join('<br>'))
-      + row('Sortie',      entry.month || '')
-      + row('Pêche',       entry.catch_date || '')
-      + row('Bateaux',     (entry.boats || []).join('<br>'))
+      + row('Composition', (entry.composition || []).join('<br>'))
+      + row('Sortie',      entry.sortie || '')
+      + row('Pêche',       entry.peche  || '')
+      + row('Bateaux',     (entry.bateaux || []).join('<br>'))
       + '</div>';
   }
 
@@ -160,7 +162,7 @@ function renderArchive(data) {
     var content = document.getElementById('archive-content');
     var prev    = document.querySelector('[data-archive="prev"]');
     var next    = document.querySelector('[data-archive="next"]');
-    if (numero)  numero.textContent = entry.header || '';
+    if (numero)  numero.textContent = entry.number || '';
     if (content) content.innerHTML  = entryHTML(entry);
     if (prev)    setDisabled(prev, index >= displayData.length - 1);
     if (next)    setDisabled(next, index <= 0);
