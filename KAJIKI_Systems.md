@@ -69,7 +69,7 @@ Two scenarios, both live, both triggering immediately.
 
 **`Email list`** (`id 5076327`) — a custom webhook named `kajiki_notifications` that validates an email against a regex and POSTs it to Resend `/contacts`. Retries once after 15 minutes on error.
 
-> **Open question:** nothing in this repo calls that webhook — there's no email-capture form on the site. It's either driven from somewhere outside the repo or currently idle. Worth confirming before building anything that assumes a mailing list exists.
+> **Decommissioned.** This served an email-capture form on the previous version of the site. Nothing calls it now — the current site has no email capture, and the feature was dropped deliberately. The scenario is still **active** in Make, so its webhook URL still accepts POSTs and still writes to the Resend audience. It occupies one of the two free-plan scenario slots. Deleting it is safe and frees that slot; nothing in this repo depends on it.
 
 ### Airtable — base `Séries` (`appestf45XMGJvLKm`)
 
@@ -156,7 +156,7 @@ So an order is not silently dropped: every branch either retries, alerts, or par
 
 **The pickup code can collide.** `R-NN` is derived in Make from `length(Commandes) + 1` on the Série record, read at the moment the run executes. Two orders processed close enough together read the same count and produce the same code. It hasn't bitten at current volume — orders arrive minutes apart, not milliseconds — but the failure is silent: two customers get the same code and nothing anywhere flags it. Worth fixing before any surge in volume, or before the code is ever used as a real identifier rather than a human convenience. An Airtable autonumber field, or deriving the code from the Stripe PaymentIntent id, would both remove the race.
 
-**A third automation has nowhere to live.** Both of Make's two free-plan scenario slots are used.
+**A third automation has nowhere to live** — but only nominally. Both free-plan scenario slots are occupied, and one of them is `Email list`, which is decommissioned. Deleting it frees a slot without a plan upgrade.
 
 ---
 
@@ -164,8 +164,8 @@ So an order is not silently dropped: every branch either retries, alerts, or par
 
 The Make organisation is on the **Free** plan:
 
-- **1 000 operations/month.** One order costs roughly 5 (trigger, search, variables, create, send). That's ~200 orders/month before the plan is the binding constraint, and the `Email list` scenario eats from the same budget.
-- **2 scenarios maximum** — both are used. A third automation needs a paid plan or a merge into an existing scenario.
+- **1 000 operations/month.** One order costs roughly 5 (trigger, search, variables, create, send). That's ~200 orders/month before the plan is the binding constraint. Effectively the whole budget is the order pipeline, since `Email list` is decommissioned and no longer fires.
+- **2 scenarios maximum** — both occupied, one by the dead `Email list`. A genuinely new third automation needs that one deleted, or a paid plan.
 - **7-day execution retention**, 3-day webhook logs. A bug reported later than a week is not diagnosable from Make history.
 - 15-minute minimum interval, 5-minute max execution time.
 
