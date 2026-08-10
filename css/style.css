@@ -598,12 +598,12 @@ body.is-closed #payment {
   /* FLAG: hardcoded — floor matching the tallest entry (3 fish + 2 bateaux)
      so the centered column doesn't jump as you navigate séries. A future
      série with more rows than that will need this raised again. */
-  min-height: 120px;
+  min-height: 104px;
 }
 
 @media (min-width: 800px) {
   #archive-content {
-    min-height: 156px;
+    min-height: 136px;
   }
 }
 
