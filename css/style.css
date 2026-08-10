@@ -549,7 +549,7 @@ body.is-closed #payment {
      sits on a footer page (already inset by its parent) or a screen
      (no parent inset). The *0.85 narrows further below that inset,
      mobile only — at/above 800px the 425px cap always wins. */
-  max-width: min(425px, calc((100vw - 2 * var(--screen-padding)) * 0.9));
+  max-width: min(425px, calc((100vw - 2 * var(--screen-padding)) * 0.85));
 }
 
 .specsheet--admin .specsheet-row {
@@ -572,46 +572,41 @@ body.is-closed #payment {
   border-bottom: 1px solid var(--color-border);
 }
 
-/* Archive specsheet */
+/* Archive sheet
+   The admin specsheet's label/value logic with the gridlines removed.
+   Type comes from the base .specsheet-label / .specsheet-value pair,
+   used without a --design/--admin variant so no frame comes with it.
 
-.specsheet--archive {
-  border-left: 1px solid var(--color-border);
-  text-align: left;
-  width: fit-content;   /* hug border + text by default; the border between the two
-                           cells makes the box width visible, so a min-width floor
-                           reads as balanced. max-width only caps — min-width widens. */
-  min-width: 160px;     /* FLAG: hardcoded — floor that widens past the hugged text */
-  max-width: 100%;
+   Columns hug their content (auto auto + fit-content) rather than
+   taking --admin's 35% split: with no rules to hold the two columns
+   together, a wide gap reads as two stray blocks drifting left
+   instead of one centered unit. Rows align to the top so a label
+   sits with the first line of a multi-line value. */
+
+.archive-sheet {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: start;
+  column-gap: var(--section-gap);
+  row-gap: var(--text-gap);
+  width: fit-content;
   margin-inline: auto;
-}
-
-@media (min-width: 800px) {
-  .specsheet--archive {
-    min-width: 200px;
-  }
-}
-
-.specsheet--archive .specsheet-value {
-  padding: var(--cell-padding); /* match the classic specsheets */
-  line-height: 1.4;             /* tighter than --line-height-text (1.6): this is the
-                                   only multi-line specsheet, so the leading between
-                                   stacked fish lines reads as excess vertical padding */
   text-align: left;
-  display: block;
-}
-
-.specsheet--archive .specsheet-value + .specsheet-value {
-  border-top: 1px solid var(--color-border);
-  padding-top: 18px;   /* a touch more breathing room below the rule (+4–6px) */
 }
 
 #archive-content {
-  min-height: 112px; /* snug to a 3-fish cell + date row so arrows don't shift when navigating */
+  /* FLAG: hardcoded — floor sized to the tallest entry a série is
+     expected to reach (3 fish + 3 bateaux), not to the tallest one
+     currently in archive.json, so publishing a série with a full boat
+     list doesn't shift the number and arrows. Shorter séries sit
+     top-aligned with space beneath. Re-measure only if a série can
+     exceed 3 fish or 3 bateaux. */
+  min-height: 164px;
 }
 
 @media (min-width: 800px) {
   #archive-content {
-    min-height: 134px;
+    min-height: 214px;
   }
 }
 

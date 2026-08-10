@@ -1,12 +1,14 @@
 [
   {
-    "header": "02",
-    "month": "Juin 2026",
-    "fish": ["Thon Rouge", "Crevette Rose", "Maquereau"]
+    "number": "02",
+    "composition": ["Thon Rouge", "Crevette Rose", "Maquereau"],
+    "sortie": "juin 2026",
+    "peche": "13 juin",
+    "bateaux": ["Trois Frères II"]
   },
   {
-    "header": "01",
-    "month": "Avril 2026",
-    "fish": ["Thon Rouge"]
+    "number": "01",
+    "composition": ["Thon Rouge"],
+    "sortie": "avril 2026"
   }
 ]

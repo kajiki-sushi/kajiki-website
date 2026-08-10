@@ -34,7 +34,9 @@ Operational state lives in JSON, not in HTML or JS. `index.html` carries only st
 
 **`data/serie.json`** — live state. Fields are grouped by visibility frequency: things you edit every série at top of each block, stable things at bottom. Loaded by `serie.js`, populated into the DOM via `data-serie-*` hooks. Used server-side too by `api/create-payment-intent.js` for amount calculation and Stripe metadata.
 
-**`data/archive.json`** — append-only history, newest entry first. Each entry: `header` (big numeral, shown large above), `fish` (array of fish names, stacked one per line), `month` (display string, e.g. `"Juillet 2026"`). `fish` and `month` render as two stacked cells inside `.specsheet--archive` — fish on top, the month as a bottom label cell separated by a border.
+**`data/archive.json`** — append-only history, newest entry first. Each entry is a set of named fields, not positional cells: `number` (the big numeral, shown large above the sheet), `composition` (array, one fish per line), `sortie` (display string, e.g. `"juillet 2026"`), `peche` (e.g. `"4 juillet"`), `bateaux` (array, one boat per line). Keys are written in the order the rows render. Months are lowercase, matching the day-and-month form used by `peche`.
+
+The field set is allowed to grow, and earlier entries may carry fewer fields than later ones. `renderArchive` skips absent keys rather than assuming a fixed row count — série 01 has no `peche` or `bateaux` and simply renders two rows. Adding a field at série 08 is a JSON change plus one `row()` line, never a migration of the entries already written.
 
 Both files are served with `Cache-Control: no-store` (set in `vercel.json`) — updates show immediately, no stale browser caches.
 
@@ -70,13 +72,16 @@ The split exists so the live operational payload (`serie.json`) stays small and 
 
 **Text links.** `.text-link` — inherits color, underline at reduced opacity at rest, increases on hover. Used inline within body text only.
 
-**Specsheets.** Three variants, same underlying row/cell structure (`.specsheet-row`, `.specsheet-label`, `.specsheet-value`), different register:
+**Specsheets.** Two variants, same underlying row/cell structure (`.specsheet-row`, `.specsheet-label`, `.specsheet-value`), different register:
 
 - `.specsheet--design` — exterior border, no vertical separator, equal column widths, centered text. For series details and pickup logistics. Read like a designed object.
 - `.specsheet--admin` — no exterior border, vertical `.specsheet-divider` between columns, asymmetric widths (35% / 1px / 1fr), left-aligned text. For contact, legal, reference tables. Read like a reference table.
-- `.specsheet--archive` — left border only, no label column, values stacked with border between them. For archive entries.
 
 The variants are standalone classes. There is no base `.specsheet` class — don't add one. Don't drift the variants toward each other; the distinction is intentional.
+
+**Archive sheet.** `.archive-sheet` — the archive screen's label/value block. It is not a third specsheet variant and carries no variant class: it uses `.specsheet-label` / `.specsheet-value` bare, so the weight contrast between them carries the hierarchy with no frame at all. `.archive-sheet` itself is layout only — a two-column grid, rows top-aligned, centered under the série numeral.
+
+Its columns hug their content rather than taking `--admin`'s 35% split. With no rules holding the two columns together, a wide gap reads as two blocks drifting left instead of one centered unit — the gridlines are what make the wider split legible, so removing them means tightening the columns. `#archive-content` reserves a fixed height, sized to the tallest entry a série is expected to reach rather than the tallest one currently in the file, so publishing a fuller série doesn't shift the numeral and arrows.
 
 **Specsheet + action group.** `.specsheet-action-group` — stacks a specsheet and a `.button-link` at `--specsheet-width`, separated by `--button-gap`. Used wherever a specsheet leads directly to an action.
 
