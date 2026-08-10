@@ -110,11 +110,19 @@ These are the sync points. Each one is a place where a change in one system sile
 | Fact | Lives in | Kept in sync by |
 |---|---|---|
 | The série name | `serie.json`, Airtable `Séries.Name`, Stripe metadata | **You**, by hand. Invariant #1 in `KAJIKI_Operations.md` |
-| Confirmation email HTML | `emails/confirmation-precommande.html` **and** the Resend module in Make | **You**, by hand. The repo copy is a mirror — Make is what actually sends. Verified identical as of this writing |
+| Confirmation email HTML | `emails/confirmation-precommande.html` **and** the Resend module in Make | **You**, by hand — see below. Verified identical as of this writing |
 | Pickup day names | `serie.json` → `pickup.days[].label`, Airtable `Commandes.Jour` options | Airtable's `typecast: true` creates missing options rather than failing, so a typo silently adds a new select option |
 | Per-day stock cap | `serie.json` → `pickup.days[].max_quantity`, enforced against Stripe | Nothing — Airtable has no cap field. Stripe is the only source of truth for stock |
 
-The email template is the sharpest of these: editing the repo file alone changes nothing a customer sees.
+### The email template is edited here, on purpose
+
+`emails/confirmation-precommande.html` is the **working copy and the backup**, not an afterthought. The Make module has no version history and no way to edit HTML comfortably; the repo has both. So the workflow is deliberate:
+
+1. Edit the template in the repo — this is where the work happens.
+2. Paste it into the Resend module in the Transaction scenario.
+3. Commit.
+
+Two consequences worth stating plainly: **an edit isn't live until it's pasted into Make**, and if Make ever loses the scenario, the repo copy is what restores the email. The `{{5.variable}}` placeholders are Make variables and must survive editing intact — they're set by module 5 (`Variables`).
 
 ---
 
@@ -128,7 +136,27 @@ The email template is the sharpest of these: editing the repo file alone changes
 | Confirmation email not delivered | Resend domain auth, or the Resend module erroring | Make execution history — **7 days retention only** |
 | Site charges the old price | `serie.json` deployed but browser cached | Not possible for data files; they're `no-store` |
 
-**No retry on the Transaction scenario.** Unlike `Email list`, it has no error handler on the Airtable or Resend modules — a transient failure loses that run. The error email only covers the "série not found" branch, not a Resend outage.
+### What catches each failure
+
+The Transaction scenario is defended at three points, plus a scenario-level net.
+
+| Point | On failure |
+|---|---|
+| **Search Séries** (module 58) | The *record missing* case is caught by the router's second branch → error email. A genuine Airtable API error has no handler here and falls through to the DLQ |
+| **Create Commande** (module 68) | Error email to the operator, **then retries 3× at 15-minute intervals** |
+| **Client email** (module 69) | Error email to the operator, **then retries once after 15 minutes** |
+| **Error notification** (module 75) | `Break` with retry off — deliberately, so a failing alerter can't loop |
+| **Scenario level** | `dlq: true`, `dataloss: false` — a run that fails anyway is stored in the dead-letter queue for manual replay rather than lost |
+
+So an order is not silently dropped: every branch either retries, alerts, or parks the run for replay. The operator alert fires *before* the retries, so an email doesn't mean the order failed permanently — check the DLQ and the execution history before acting on one.
+
+---
+
+## Known gaps — unbuilt, tracked here
+
+**The pickup code can collide.** `R-NN` is derived in Make from `length(Commandes) + 1` on the Série record, read at the moment the run executes. Two orders processed close enough together read the same count and produce the same code. It hasn't bitten at current volume — orders arrive minutes apart, not milliseconds — but the failure is silent: two customers get the same code and nothing anywhere flags it. Worth fixing before any surge in volume, or before the code is ever used as a real identifier rather than a human convenience. An Airtable autonumber field, or deriving the code from the Stripe PaymentIntent id, would both remove the race.
+
+**A third automation has nowhere to live.** Both of Make's two free-plan scenario slots are used.
 
 ---
 

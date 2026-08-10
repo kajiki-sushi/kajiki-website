@@ -79,6 +79,23 @@ These are decisions, not observations. The code won't tell you them, and each on
 
 ---
 
+## Keeping the docs true
+
+A change that outdates a doc updates it **in the same commit**. Not afterwards, not when someone notices. Docs that lag the code stop being trusted, and an untrusted doc is worse than no doc.
+
+What to check, and only when the change actually touches it:
+
+- **This file** — only when a *decision* changes: a new prohibition, a dropped one, a new cross-system contract. Never for a change the code now describes on its own. Keeping it small is the point; adding to it needs the same justification as a new pattern.
+- **`KAJIKI_Systems.md`** — when the Stripe metadata keys change, when a Make module or its error handling changes, when the Airtable schema changes, or when a new env var appears. Its facts came from inspecting the live systems; re-inspect rather than guess.
+- **`KAJIKI_Operations.md`** — when a recipe's steps change, or when something moves between "Claude does" and "you do".
+- **`KAJIKI_Product.md`** — only when the *model* changes: how ordering works, what a unit is, the lifecycle. Not for copy edits or a new page. It points at the code for wording on purpose.
+
+Before writing a line into any of them, apply the same test that produced them: **could a session work this out by reading the code?** If yes, don't write it. Only decisions, prohibitions, and things living outside this repo earn a line.
+
+Say what you updated, and say when you deliberately updated nothing.
+
+---
+
 ## Design assets
 
 `design/` holds self-contained static templates — Instagram stories, print menus — named `[format]-[subject].html`. Each imports `design/tokens.css`, which mirrors the site's `:root`; change a global token for every template there and nowhere else. Per-série edits are documented in a comment at the top of each template's `<style>`.
