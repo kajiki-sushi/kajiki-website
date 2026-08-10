@@ -12,8 +12,9 @@
      3. quantity + pickup_day      — input validation
      4. email format               — basic regex
      5. inventory cap              — sums succeeded intents for this
-                                     series, refuses if next order
-                                     would exceed max_total_quantity
+                                     series + pickup day, refuses if the
+                                     next order would exceed that day's
+                                     pickup.days[].max_quantity
    ============================================================ */
 
 const Stripe = require('stripe');
