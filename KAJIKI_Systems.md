@@ -51,9 +51,9 @@ The metadata written onto each PaymentIntent is the entire payload Make gets. Ni
 
 ### Make — organisation `KAJIKI` (team `My Team`, `id 1359472`)
 
-Two scenarios, both live, both triggering immediately.
+One scenario, live, triggering immediately.
 
-**`Transaction ― Stripe & Resend`** (`id 5069678`) — the order pipeline.
+**`Transaction ― Stripe & Resend`** (`id 5069678`) — the order pipeline, and the only automation KAJIKI runs.
 
 1. **Stripe webhook** trigger, filtered to `event_type = payment_intent.succeeded`.
 2. **Airtable — search Séries**, `{Name} = metadata.series_name`, max 1 record.
@@ -67,9 +67,7 @@ Two scenarios, both live, both triggering immediately.
    **Not found →**
    - **Resend — error alert.** Subject `KAJIKI® ― Erreur Transaction`, to the operator's personal inbox (address set in the module). Carries the série name, customer name, email and quantity so the order is recoverable by hand.
 
-**`Email list`** (`id 5076327`) — a custom webhook named `kajiki_notifications` that validates an email against a regex and POSTs it to Resend `/contacts`. Retries once after 15 minutes on error.
-
-> **Decommissioned.** This served an email-capture form on the previous version of the site. Nothing calls it now — the current site has no email capture, and the feature was dropped deliberately. The scenario is still **active** in Make, so its webhook URL still accepts POSTs and still writes to the Resend audience. It occupies one of the two free-plan scenario slots. Deleting it is safe and frees that slot; nothing in this repo depends on it.
+> A second scenario, `Email list`, fed a Resend audience from an email-capture form on the previous version of the site. The feature was dropped and the scenario deleted. Noted here only so its absence doesn't read as an oversight: there is no mailing-list automation, and the Resend audience it wrote to is no longer maintained.
 
 ### Airtable — base `Séries` (`appestf45XMGJvLKm`)
 
@@ -97,7 +95,7 @@ Two scenarios, both live, both triggering immediately.
 
 ### Resend
 
-Sends everything, from `contact@kajiki.fr`. Two transactional sends in the Transaction scenario, plus a `/contacts` audience API used by `Email list`. Connection in Make is named `Make ― Transactions & Marketing`.
+Sends everything, from `contact@kajiki.fr` — two transactional sends in the Transaction scenario, and nothing else. Connection in Make is named `Make ― Transactions & Marketing`.
 
 Domain authentication for `kajiki.fr` (SPF/DKIM/DMARC records at the DNS host) lives in the Resend dashboard, not here — that's the first place to look for a deliverability or email-hosting problem.
 
@@ -156,7 +154,7 @@ So an order is not silently dropped: every branch either retries, alerts, or par
 
 **The pickup code can collide.** `R-NN` is derived in Make from `length(Commandes) + 1` on the Série record, read at the moment the run executes. Two orders processed close enough together read the same count and produce the same code. It hasn't bitten at current volume — orders arrive minutes apart, not milliseconds — but the failure is silent: two customers get the same code and nothing anywhere flags it. Worth fixing before any surge in volume, or before the code is ever used as a real identifier rather than a human convenience. An Airtable autonumber field, or deriving the code from the Stripe PaymentIntent id, would both remove the race.
 
-**A third automation has nowhere to live** — but only nominally. Both free-plan scenario slots are occupied, and one of them is `Email list`, which is decommissioned. Deleting it frees a slot without a plan upgrade.
+*(Nothing else outstanding. A second automation has room to exist — one of Make's two free-plan slots is empty.)*
 
 ---
 
@@ -164,8 +162,8 @@ So an order is not silently dropped: every branch either retries, alerts, or par
 
 The Make organisation is on the **Free** plan:
 
-- **1 000 operations/month.** One order costs roughly 5 (trigger, search, variables, create, send). That's ~200 orders/month before the plan is the binding constraint. Effectively the whole budget is the order pipeline, since `Email list` is decommissioned and no longer fires.
-- **2 scenarios maximum** — both occupied, one by the dead `Email list`. A genuinely new third automation needs that one deleted, or a paid plan.
+- **1 000 operations/month.** One order costs roughly 5 (trigger, search, variables, create, send). The order pipeline is the only thing spending, so that's ~200 orders/month before the plan becomes the binding constraint.
+- **2 scenarios maximum** — one used, one free. A second automation fits without a plan upgrade.
 - **7-day execution retention**, 3-day webhook logs. A bug reported later than a week is not diagnosable from Make history.
 - 15-minute minimum interval, 5-minute max execution time.
 
