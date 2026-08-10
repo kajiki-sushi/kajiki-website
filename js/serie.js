@@ -143,7 +143,7 @@ function renderArchive(data) {
     return '<div class="archive-sheet">'
       + row('Sortie',      entry.month || '')
       + row('Composition', (entry.fish  || []).join('<br>'))
-      + row('Bateaux',     (entry.boats || []).join('<br>'))
+      + row('Distribution', (entry.distribution || []).join('<br>'))
       + '</div>';
   }
 
