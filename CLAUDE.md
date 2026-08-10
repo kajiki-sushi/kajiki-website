@@ -4,7 +4,7 @@ Static site, no build step: `index.html` + `pages/*.html`, one stylesheet, vanil
 
 **Read the code for facts.** It's ~2,500 lines and it's always current. This file holds only what the code can't tell you: decisions, prohibitions, and contracts with systems outside this repo.
 
-Month-to-month operations — launching a série, changing price or dates, the Airtable step — live in `KAJIKI_Operations.md`.
+Month-to-month operations — launching a série, changing price or dates, the Airtable step — live in `KAJIKI_Operations.md`. How the repo connects to Stripe, Make, Airtable and Resend is in `KAJIKI_Systems.md`; read it when work crosses that boundary.
 
 ---
 

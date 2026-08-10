@@ -69,6 +69,7 @@ The scarcity here is real and structural, which is exactly why it's never dramat
 | Homepage copy and panel order | `index.html` |
 | Footer pages | `pages/` |
 | How a série is launched and run | `KAJIKI_Operations.md` |
+| How the systems connect — Stripe, Make, Airtable, Resend | `KAJIKI_Systems.md` |
 | Code rules and design decisions | `CLAUDE.md` |
 
 Anything time-sensitive should be read from those rather than assumed from this doc.
