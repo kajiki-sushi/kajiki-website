@@ -1,6 +1,6 @@
 # KAJIKI — Operations Manual
 
-*The month-to-month runbook. Pairs with `KAJIKI_Design_v2.md` (the design system) — that doc is about how the site looks and why; this one is about how you run it.*
+*The month-to-month runbook — how you run the site. Pairs with `CLAUDE.md` (the code and design rules Claude works to) and `KAJIKI_Product.md` (what the site is, for positioning and communication).*
 
 ---
 
@@ -105,7 +105,7 @@ Give whichever fields you have. Any field left out simply doesn't render its row
 
 - **Deadline auto-closes** preorders at `preorder_deadline_iso` — no action needed at the cutoff moment.
 - **Per-day sold-out** is automatic: the payment API sums succeeded Stripe orders for that série + day and refuses once `max_quantity` is hit ("Jour complet").
-- **Missing-Airtable lock** is automatic: if the série's Airtable record doesn't exist, the button stays locked (see the Airtable gate in `KAJIKI_Design_v2.md`).
+- **Missing-Airtable lock** is automatic: if the série's Airtable record doesn't exist, the button stays locked (see the Airtable gate in `CLAUDE.md`).
 
 ---
 
