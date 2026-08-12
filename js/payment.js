@@ -7,7 +7,9 @@
 
 (function () {
 
-  // Show/hide the payment screen
+  // Show/hide the payment screen. body.is-payment-open lets the fixed header
+  // stand down while the form is up — the close X owns that top-right corner,
+  // and the availability indicator would sit under it.
   var paymentScreen = document.getElementById('payment');
   var openTrigger   = document.querySelector('a[href="#payment"]');
   var closeTrigger  = document.querySelector('.payment-close');
@@ -16,6 +18,7 @@
     openTrigger.addEventListener('click', function (e) {
       e.preventDefault();
       paymentScreen.classList.add('is-open');
+      document.body.classList.add('is-payment-open');
       paymentScreen.dispatchEvent(new CustomEvent('payment:open'));
       requestAnimationFrame(function () {
         paymentScreen.scrollIntoView({ behavior: 'smooth' });
@@ -27,6 +30,7 @@
     closeTrigger.addEventListener('click', function (e) {
       e.preventDefault();
       paymentScreen.classList.remove('is-open');
+      document.body.classList.remove('is-payment-open');
       var retrait = document.getElementById('retrait');
       if (retrait) retrait.scrollIntoView({ behavior: 'smooth' });
     });

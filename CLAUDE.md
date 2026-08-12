@@ -12,7 +12,9 @@ Month-to-month operations — launching a série, changing price or dates, the A
 
 Minimalist, brutalist, laboratory. Black `#111` on white.
 
-**Opacity is the only modulation. No color enters the system, ever.** Anything that would use color elsewhere uses opacity here.
+**Opacity is the only modulation.** Anything that would use color elsewhere uses opacity here.
+
+**Color has exactly one use, and the list is closed: the availability indicator.** `--color-available` / `--color-unavailable` say whether the série is orderable, in the header, and nowhere else. A second use isn't a precedent — it's a violation.
 
 **Opacity means interactive state** — quiet links at rest, hover, disabled. Never apply it to static text as a hierarchy or secondary-information device.
 
