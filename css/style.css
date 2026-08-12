@@ -9,6 +9,11 @@
   --color-text: rgb(var(--color-base));
   --color-background: #fff;
 
+  /* Availability — the system's only color, and the only place color is
+     permitted (see CLAUDE.md). Reserved for .serie-indicator; nothing else. */
+  --color-available: #16a34a;
+  --color-unavailable: #e07b00;
+
   /* Opacity */
   --opacity-border: 0.3;     /* structural dividers */
   --opacity-quiet: 0.7;       /* receding text — links at rest, placeholder */
@@ -72,6 +77,12 @@
   --button-height: 36px;
   --button-padding: 22px;
 
+  /* Header — one signature line box. The header is fixed, so a screen's own
+     top-corner element (.archive-title) offsets by this to clear it. Derived
+     from --text-signature, so the 800px block needs no override. */
+  --header-height: calc(var(--text-signature) * var(--line-height-nav));
+  --indicator-size: 6px;
+
   /* Arrow nav */
   --arrow-size: 20px;
   --arrow-height: 34px;
@@ -112,6 +123,8 @@
     --field-height: 40px;
     --button-height: 48px;
     --button-padding: 36px;
+
+    --indicator-size: 7px;
 
     /* Arrow nav */
     --arrow-size: 25px;
@@ -249,12 +262,19 @@ body.is-closed #payment {
   display: none;
 }
 
+/* Fixed: the header rides the scroll on every screen. Its height is one
+   signature line box, so the signature sits exactly where it did when the
+   header was absolute — and the availability indicator centers against it. */
 .site-header {
-  position: absolute;
+  position: fixed;
   top: var(--screen-padding);
   left: var(--screen-padding);
   right: var(--screen-padding);
+  height: var(--header-height);
   z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   pointer-events: none;
 }
 
@@ -275,9 +295,6 @@ body.is-closed #payment {
 }
 
 .signature {
-  position: absolute;
-  top: 0;
-  left: 0;
   font-size: var(--text-signature);
   font-weight: var(--weight-medium);
   line-height: var(--line-height-nav);
@@ -287,9 +304,40 @@ body.is-closed #payment {
   pointer-events: auto;
 }
 
+/* Availability indicator — is the série orderable, at a glance.
+   serie.js adds the state class only once the answer is final, so it fades
+   in already correct instead of flashing the wrong one while the status call
+   is in flight. Hidden while the payment screen is open: .payment-close owns
+   that corner there. */
+
+.serie-indicator {
+  width: var(--indicator-size);
+  height: var(--indicator-size);
+  flex-shrink: 0;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity var(--duration-smooth) ease;
+}
+
+.serie-indicator.is-available {
+  background: var(--color-available);
+  opacity: 1;
+}
+
+.serie-indicator.is-unavailable {
+  background: var(--color-unavailable);
+  opacity: 1;
+}
+
+body.is-payment-open .serie-indicator {
+  opacity: 0;
+}
+
+/* Stacks one line below the signature: the fixed header owns that corner
+   permanently, so the screen's own label takes the next line box. */
 .archive-title {
   position: absolute;
-  top: var(--screen-padding);
+  top: calc(var(--screen-padding) + var(--header-height));
   left: var(--screen-padding);
   font-size: var(--text-signature);
   font-weight: var(--weight-medium);
@@ -335,11 +383,6 @@ body.is-closed #payment {
   fill: none;
   stroke: currentColor;
   stroke-width: 1.2;
-}
-
-.signature sup {
-  font-size: 0.55em;
-  vertical-align: super;
 }
 
 

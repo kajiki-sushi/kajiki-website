@@ -39,6 +39,8 @@ Claude handles the fiddly, easy-to-forget bits for you (cents conversion, cache-
    - **Preorders OPEN** — future deadline **and** the Airtable record exists.
    - **Preorders CLOSED** — past deadline **OR** the Airtable record is missing. The série still shows; the PRÉCOMMANDER button locks and the payment screen hides.
 
+   The dot at the right of the homepage header reads that state at a glance: green open, orange closed.
+
 ---
 
 ## Deploying & the cache-bust rule
@@ -59,7 +61,7 @@ Claude handles the fiddly, easy-to-forget bits for you (cents conversion, cache-
 3. **Claude, in `archive.json`:** prepend the série that just finished (see *Update the archive*).
 4. **Claude:** swap product photos if you have new ones (see *Swap product photos*).
 5. **You:** `git push`.
-6. **Verify:** on the live homepage, PRÉCOMMANDER is clickable. If it's locked despite a future deadline → the name doesn't match the Airtable record (invariant #1). Allow ~1 min — the status check is cached ~30 s.
+6. **Verify:** on the live homepage, the header dot is green and PRÉCOMMANDER is clickable. If it's locked despite a future deadline → the name doesn't match the Airtable record (invariant #1). Allow ~1 min — the status check is cached ~30 s.
 
 ### ▸ Close preorders early (before the deadline)
 *Ask: "Close preorders."*

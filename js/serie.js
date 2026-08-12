@@ -7,6 +7,7 @@
    (body.is-closed — série stays, PRÉCOMMANDER locks, payment hides)
    when the deadline has passed, or when /api/serie-status reports
    the série isn't orderable yet (its Airtable record is missing).
+   The same answer drives the header indicator (green/orange).
    Schedule (Jeu·18h–22h ...) is generated from days[].
    Exposes window.KAJIKI_SERIE_READY (Promise) for payment.js.
    ============================================================ */
@@ -31,9 +32,19 @@ function isPastDeadline(series) {
   return Date.now() >= new Date(series.preorder_deadline_iso).getTime();
 }
 
+// Header indicator. Called only with a settled answer — the dot stays
+// invisible until then rather than flashing a color it has to take back.
+function setAvailability(open) {
+  var el = document.querySelector('[data-serie-availability]');
+  if (!el) return;
+  el.classList.toggle('is-available', open);
+  el.classList.toggle('is-unavailable', !open);
+}
+
 function closePreorders(preorderBtn) {
   document.body.classList.add('is-closed');
   if (preorderBtn) preorderBtn.classList.add('is-disabled');
+  setAvailability(false);
 }
 
 function verifyOrderable(preorderBtn) {
@@ -41,20 +52,24 @@ function verifyOrderable(preorderBtn) {
     .then(function (r) { return r.json(); })
     .then(function (status) {
       if (status && status.open === false) closePreorders(preorderBtn);
+      else setAvailability(true);
     })
-    .catch(function () { /* fail open — leave preorders available */ });
+    .catch(function () { setAvailability(true); /* fail open — leave preorders available */ });
 }
 
 function render(data) {
   var preorderBtn = document.querySelector('a.button-link--full[href="#payment"]');
+  var indicator   = document.querySelector('[data-serie-availability]');
 
   if (isPastDeadline(data.series)) {
     closePreorders(preorderBtn);
-  } else if (preorderBtn) {
+  } else if (preorderBtn || indicator) {
     // Deadline still open, but the série is only truly orderable once its
     // Airtable record exists (so Make can log the order). Ask the server and
     // lock the button before the customer opens the form. Fails open: a
     // network/Airtable hiccup leaves preorders available (Make fallback).
+    // Gated on there being something to answer — a page with neither the
+    // button nor the indicator has no use for the request.
     verifyOrderable(preorderBtn);
   }
 
