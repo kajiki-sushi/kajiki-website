@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KAJIKI® — Entrée, trois rendus</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;400;500&display=block" rel="stylesheet">
+
+<style>
+/* ============================================================
+   ENTRANCE — three renderings of one visual grammar
+   ============================================================
+   Not a page of the site. A surface for judging the grammar
+   before any of it enters css/style.css or index.html. Delete
+   prototypes/ once a direction is chosen — it is scaffolding,
+   and scaffolding that outlives the build is dead code.
+
+   ---- Edit per Série (values transcribed from data/serie.json) ----
+   .value  ->  02 · 19–20 juin · 14 juin · 16 · ~500 g · 95 €
+   Static on purpose: a prototype has no fetch. Nothing here is
+   loaded by the site, so no per-série value escapes data/*.json.
+   -----------------------------------------------------------------
+
+   THE GRAMMAR — every element belongs to exactly one mode:
+     RECORD    small type, hairline rules, label-left / value-right
+     SPECIMEN  the photograph, large, wordless
+     NOTE      one observed sentence, off the record rhythm
+
+   THE KEY RULE — the photograph is measured in rows. Its cell is
+   an integer number of record rows tall and spans the record's
+   full measure, so it shares the block's edges and its rhythm
+   instead of floating beside them.
+   ============================================================ */
+
+
+/* ============================================================
+   SUBSTRATE
+   ============================================================
+   Four numbers, and everything is a multiple of them. Meant to
+   go unnoticed: it produces consistency, not meaning.
+   Type is the site's existing five-step scale — no new style.
+   ============================================================ */
+
+:root {
+
+  /* Color — from css/style.css */
+  --color-base: 17 17 17;
+  --color-text: rgb(var(--color-base));
+  --color-background: #fff;
+  --opacity-border: 0.3;
+  --opacity-ui: 0.8;
+  --color-border: rgb(var(--color-base) / var(--opacity-border));
+
+  /* Type — from css/style.css, unchanged */
+  --font-family: 'Inter', Helvetica, sans-serif;
+  --weight-light: 200;
+  --weight-regular: 400;
+  --weight-medium: 500;
+
+  --text-display: 48px;
+  --text-signature: 14px;
+  --text-body-medium: 12px;
+  --text-body: 10px;
+  --text-detail: 8px;
+
+  --letter-spacing-display: -0.04em;
+  --letter-spacing-text: 0.03em;
+  --line-height-display: 1;
+  --line-height-text: 1.6;
+  --line-height-detail: 1.4;
+
+  /* The four numbers */
+  --interval: 8px;                            /* the one spacing interval */
+  --column: calc(min(100vw - 2 * var(--screen-padding), 360px) / 2);  /* the one measure — a block is two */
+  --row: calc(var(--interval) * 5);           /* the one vertical rhythm */
+  --rule: 1px;                                /* the one line */
+
+  --screen-padding: calc(var(--interval) * 3);
+}
+
+@media (min-width: 800px) {
+  :root {
+    --text-display: 60px;
+    --text-signature: 17px;
+    --text-body-medium: 14px;
+    --text-body: 12.5px;
+    --text-detail: 10px;
+
+    --letter-spacing-display: -0.01em;
+
+    --interval: 10px;
+    --column: 270px;
+    --screen-padding: calc(var(--interval) * 8);
+  }
+}
+
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  color: var(--color-text);
+  background: var(--color-background);
+}
+
+img { display: block; max-width: 100%; }
+
+
+/* ============================================================
+   SCREEN
+   ============================================================ */
+
+.screen {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: calc(var(--interval) * 10) var(--screen-padding);
+}
+
+.site-header {
+  position: absolute;
+  top: var(--screen-padding);
+  left: var(--screen-padding);
+  z-index: 100;
+}
+
+.signature {
+  font-size: var(--text-signature);
+  font-weight: var(--weight-medium);
+  line-height: 1.1;
+  letter-spacing: var(--letter-spacing-text);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.signature sup { font-size: 0.55em; vertical-align: super; }
+
+/* The entrance: one block, one note. Nothing else. */
+.entrance {
+  width: calc(var(--column) * 2);
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--interval) * 5);
+}
+
+
+/* ============================================================
+   RECORD
+   ============================================================
+   Label left, value right, one hairline between rows. The two
+   columns are the measure; the row is the rhythm. Both are
+   shared with the specimen, which is the whole point.
+   ============================================================ */
+
+.block {
+  border: var(--rule) solid var(--color-border);
+}
+
+.block > * + * {
+  border-top: var(--rule) solid var(--color-border);
+}
+
+.row {
+  height: var(--row);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+}
+
+.label,
+.value {
+  font-size: var(--text-body);
+  line-height: var(--line-height-text);
+  letter-spacing: var(--letter-spacing-text);
+}
+
+.label {
+  padding-left: calc(var(--interval) * 2);
+  font-weight: var(--weight-regular);
+}
+
+.value {
+  padding-right: calc(var(--interval) * 2);
+  text-align: right;
+  font-weight: var(--weight-light);
+}
+
+/* Identification row — the série number carried at display size.
+   Two rows tall, so it stays on the rhythm while breaking the scale. */
+.row--identification {
+  height: calc(var(--row) * 2);
+}
+
+.row--identification .value {
+  font-size: var(--text-display);
+  font-weight: var(--weight-medium);
+  line-height: var(--line-height-display);
+  letter-spacing: var(--letter-spacing-display);
+}
+
+
+/* ============================================================
+   SPECIMEN
+   ============================================================
+   Height is declared in rows, never in pixels. --specimen-rows
+   is the only thing that changes between renderings.
+   ============================================================ */
+
+.specimen {
+  position: relative;
+  height: calc(var(--row) * var(--specimen-rows, 6));
+  overflow: hidden;
+}
+
+.specimen img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: var(--specimen-position, center);
+}
+
+
+/* ============================================================
+   SPLIT BLOCK — specimen and record as two columns of one table
+   ============================================================ */
+
+.block--split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.block--split > * + * {
+  border-top: none;
+  border-left: var(--rule) solid var(--color-border);
+}
+
+.block--split .record > .row + .row {
+  border-top: var(--rule) solid var(--color-border);
+}
+
+/* Here the record sets the height and the specimen conforms. */
+.block--split .specimen {
+  height: auto;
+}
+
+
+/* ============================================================
+   NOTE
+   ============================================================
+   Off the record rhythm: no label, no value, no rule, no
+   centred line. One sentence, set to the block's measure.
+   ============================================================ */
+
+.note {
+  font-size: var(--text-body-medium);
+  font-weight: var(--weight-light);
+  line-height: var(--line-height-text);
+  letter-spacing: var(--letter-spacing-text);
+  text-align: left;
+  text-wrap: balance;
+}
+
+
+/* ============================================================
+   PREVIEW APPARATUS — not part of the grammar
+   ============================================================
+   The strip above each screen exists only so the three
+   renderings can be told apart in conversation. It is chrome;
+   none of it survives into the site.
+   ============================================================ */
+
+.rendering-tag {
+  display: flex;
+  gap: calc(var(--interval) * 2);
+  padding: calc(var(--interval) * 2) var(--screen-padding);
+  border-bottom: var(--rule) solid var(--color-border);
+  font-size: var(--text-detail);
+  line-height: var(--line-height-detail);
+  letter-spacing: var(--letter-spacing-text);
+}
+
+.rendering-tag b { font-weight: var(--weight-medium); }
+.rendering-tag span { font-weight: var(--weight-light); }
+</style>
+</head>
+
+<body>
+
+
+<!-- ============================================================
+     01 — PLANCHE
+     Densest. The specimen is a row of the record: rules above it,
+     rules below it, six rows tall, full measure. No display type
+     anywhere — the whole screen is held at record size, so the
+     photograph is the only large thing on it.
+     ============================================================ -->
+
+<div class="rendering-tag">
+  <b>01 · PLANCHE</b>
+  <span>Densité haute · le spécimen est une ligne du registre</span>
+</div>
+
+<section class="screen">
+  <header class="site-header"><a href="/" class="signature">KAJIKI<sup>®</sup></a></header>
+
+  <div class="entrance">
+
+    <div class="block" style="--specimen-rows: 6; --specimen-position: 32% 40%;">
+
+      <div class="row">
+        <span class="label">Série</span>
+        <span class="value">02</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Dates</span>
+        <span class="value">19–20 juin</span>
+      </div>
+
+      <figure class="specimen">
+        <img src="../assets/images/samples-3.jpg" alt="Plateau de la Série 02">
+      </figure>
+
+      <div class="row">
+        <span class="label">Clôture</span>
+        <span class="value">14 juin</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Pièces</span>
+        <span class="value">16</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Net</span>
+        <span class="value">~500 g</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Prix</span>
+        <span class="value">95 €</span>
+      </div>
+
+    </div>
+
+    <p class="note">On ne sait pas encore ce qu’il y aura dedans : la criée décide après la clôture.</p>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     02 — ÉTIQUETTE
+     Sparsest. The specimen is the top of the block and the record
+     is fused to its bottom edge like a plate caption. The série
+     number carries at display size, right-aligned to the
+     photograph's own right edge. Three rows, no price — the
+     transaction is a later screen.
+     ============================================================ -->
+
+<div class="rendering-tag">
+  <b>02 · ÉTIQUETTE</b>
+  <span>Densité basse · le registre est légendé sous le spécimen</span>
+</div>
+
+<section class="screen">
+  <header class="site-header"><a href="/" class="signature">KAJIKI<sup>®</sup></a></header>
+
+  <div class="entrance">
+
+    <div class="block" style="--specimen-rows: 8; --specimen-position: 40% 42%;">
+
+      <figure class="specimen">
+        <img src="../assets/images/samples-3.jpg" alt="Plateau de la Série 02">
+      </figure>
+
+      <div class="row row--identification">
+        <span class="label">Série</span>
+        <span class="value">02</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Dates</span>
+        <span class="value">19–20 juin</span>
+      </div>
+
+      <div class="row">
+        <span class="label">Clôture</span>
+        <span class="value">14 juin</span>
+      </div>
+
+    </div>
+
+    <p class="note">On ne sait pas encore ce qu’il y aura dedans : la criée décide après la clôture.</p>
+
+  </div>
+</section>
+
+
+<!-- ============================================================
+     03 — FICHE
+     Between the two. Specimen and record are two columns of one
+     table, sharing the top rule, the bottom rule and one vertical
+     hairline. The record sets the height; the photograph takes it.
+     ============================================================ -->
+
+<div class="rendering-tag">
+  <b>03 · FICHE</b>
+  <span>Densité moyenne · spécimen et registre en deux colonnes</span>
+</div>
+
+<section class="screen">
+  <header class="site-header"><a href="/" class="signature">KAJIKI<sup>®</sup></a></header>
+
+  <div class="entrance">
+
+    <div class="block block--split" style="--specimen-position: 30% 45%;">
+
+      <figure class="specimen">
+        <img src="../assets/images/samples-3.jpg" alt="Plateau de la Série 02">
+      </figure>
+
+      <div class="record">
+        <div class="row">
+          <span class="label">Série</span>
+          <span class="value">02</span>
+        </div>
+        <div class="row">
+          <span class="label">Dates</span>
+          <span class="value">19–20 juin</span>
+        </div>
+        <div class="row">
+          <span class="label">Clôture</span>
+          <span class="value">14 juin</span>
+        </div>
+        <div class="row">
+          <span class="label">Contenu</span>
+          <span class="value">Sushi, futomaki &amp; maki</span>
+        </div>
+        <div class="row">
+          <span class="label">Pièces</span>
+          <span class="value">16</span>
+        </div>
+        <div class="row">
+          <span class="label">Net</span>
+          <span class="value">~500 g</span>
+        </div>
+        <div class="row">
+          <span class="label">Prix</span>
+          <span class="value">95 €</span>
+        </div>
+        <div class="row">
+          <span class="label">Retrait</span>
+          <span class="value">Montpellier</span>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="note">On ne sait pas encore ce qu’il y aura dedans : la criée décide après la clôture.</p>
+
+  </div>
+</section>
+
+
+</body>
+</html>
