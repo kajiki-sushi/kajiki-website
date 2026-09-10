@@ -14,7 +14,7 @@ https://app.notion.com/p/3d79c5815e1d818ebc7cebb18f4faf6c
 
 Fetch what the task touches — usually **Website**, **Services** or **Operations**.
 
-**You own those three pages** — and the Index. If you create, rename, move or retire any page anywhere in the KAJIKI workspace, not just under System, update the Index entry in the same session; a wrong Index sends a session to the wrong place with no signal that anything is off. Read the three pages against the live code before working; if one no longer matches reality, correct it in that same session and update its *Last verified* date. **Don't edit the Doctrine pages** — those are written from the Claude app.
+**You own those three pages.** Read them against the live code before working; if one no longer matches reality, correct it in that same session and update its *Last verified* date. **Don't edit the Doctrine pages** — those are written from the Claude app. (The Index itself carries its own currency rule — read it there.)
 
 **If Notion is unreachable, say so before proceeding.**
 
