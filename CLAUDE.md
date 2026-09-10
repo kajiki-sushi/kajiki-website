@@ -4,7 +4,21 @@ Static site, no build step: `index.html` + `pages/*.html`, one stylesheet, vanil
 
 **Read the code for facts.** It's ~2,500 lines and it's always current. This file holds only what the code can't tell you: decisions, prohibitions, and contracts with systems outside this repo.
 
-Month-to-month operations — launching a série, changing price or dates, the Airtable step — live in `KAJIKI_Operations.md`. How the repo connects to Stripe, Make, Airtable and Resend is in `KAJIKI_Systems.md`; read it when work crosses that boundary.
+---
+
+## Context — Notion
+
+**Operational documentation lives in Notion, not this repo.** Before working on the site, its functions, Make, Airtable or Resend, fetch the KAJIKI Index:
+
+https://app.notion.com/p/3d79c5815e1d818ebc7cebb18f4faf6c
+
+Fetch what the task touches — usually **Website**, **Services** or **Operations**.
+
+**You own those three pages.** Read them against the live code before working; if one no longer matches reality, correct it in that same session and update its *Last verified* date. **Don't edit the Doctrine pages** — those are written from the Claude app.
+
+**If Notion is unreachable, say so before proceeding.**
+
+The `KAJIKI_Product.md`, `KAJIKI_Systems.md` and `KAJIKI_Operations.md` files still present in this repo are superseded by those pages and pending deletion. Don't read them for facts, and don't update them.
 
 ---
 
@@ -86,9 +100,9 @@ A change that outdates a doc updates it **in the same commit**. Not afterwards, 
 What to check, and only when the change actually touches it:
 
 - **This file** — only when a *decision* changes: a new prohibition, a dropped one, a new cross-system contract. Never for a change the code now describes on its own. Keeping it small is the point; adding to it needs the same justification as a new pattern.
-- **`KAJIKI_Systems.md`** — when the Stripe metadata keys change, when a Make module or its error handling changes, when the Airtable schema changes, or when a new env var appears. Its facts came from inspecting the live systems; re-inspect rather than guess.
-- **`KAJIKI_Operations.md`** — when a recipe's steps change, or when something moves between "Claude does" and "you do".
-- **`KAJIKI_Product.md`** — only when the *model* changes: how ordering works, what a unit is, the lifecycle. Not for copy edits or a new page. It points at the code for wording on purpose.
+- **Notion → Services** — when the Stripe metadata keys change, when a Make module or its error handling changes, when the Airtable schema changes, or when a new env var appears. Its facts came from inspecting the live systems; re-inspect rather than guess.
+- **Notion → Operations** — when a recipe's steps change, or when something moves between "Claude does" and "you do".
+- **Notion → Website** — only when the *model* changes: how ordering works, what a unit is, the lifecycle. Not for copy edits or a new page. It points at the code for wording on purpose.
 
 Before writing a line into any of them, apply the same test that produced them: **could a session work this out by reading the code?** If yes, don't write it. Only decisions, prohibitions, and things living outside this repo earn a line.
 
