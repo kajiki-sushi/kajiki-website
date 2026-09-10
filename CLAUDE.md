@@ -18,8 +18,6 @@ Fetch what the task touches — usually **Website**, **Services** or **Operation
 
 **If Notion is unreachable, say so before proceeding.**
 
-The `KAJIKI_Product.md`, `KAJIKI_Systems.md` and `KAJIKI_Operations.md` files still present in this repo are superseded by those pages and pending deletion. Don't read them for facts, and don't update them.
-
 ---
 
 ## Aesthetic law
