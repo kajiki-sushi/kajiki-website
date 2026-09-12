@@ -12,6 +12,8 @@ Static site, no build step: `index.html` + `pages/*.html`, one stylesheet, vanil
 
 https://app.notion.com/p/3d79c5815e1d818ebc7cebb18f4faf6c
 
+The Notion Index page (`3d79c581-5e1d-818e-bc7c-ebb18f4faf6c`) has one line per document. Whoever changes the tree updates that page in the same session. Creating, renaming, moving, or retiring a page, or changing what a page covers, all change the Index. Editing content inside an existing page does not. A wrong description is worse than a missing entry: it stops the page being opened at all.
+
 Fetch what the task touches — usually **Website**, **Services** or **Operations**.
 
 **You own those three pages.** Read them against the live code before working; if one no longer matches reality, correct it in that same session and update its *Last verified* date. **Don't edit the Doctrine pages** — those are written from the Claude app. (The Index itself carries its own currency rule — read it there.)
