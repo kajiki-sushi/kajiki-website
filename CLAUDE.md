@@ -16,7 +16,7 @@ The Notion Index page (`3d79c581-5e1d-818e-bc7c-ebb18f4faf6c`) has one line per 
 
 Fetch what the task touches — usually **Website**, **Services** or **Operations**.
 
-**You own those three pages.** Read them against the live code before working; if one no longer matches reality, correct it in that same session and update its *Last verified* date. **Don't edit the Doctrine pages** — those are written from the Claude app. (The Index itself carries its own currency rule — read it there.)
+**You own those three pages.** Read them against the live code before working; if one no longer matches reality, correct it in that same session and update its *Last verified* date. **Don't edit the Doctrine pages** — those are written from the Claude app.
 
 **If Notion is unreachable, say so before proceeding.**
 
